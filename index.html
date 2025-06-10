@@ -70,7 +70,6 @@
     </div>
 
     <div id="letterCard" class="bg-slate-800/80 backdrop-blur-sm shadow-2xl rounded-2xl max-w-2xl w-full p-6 sm:p-8 md:p-10 lg:p-12 mx-auto my-8 border-t-4 border-pink-500 hidden relative">
-        <!-- Botón para controlar la música (Play/Pause) -->
         <button id="music-control-button" class="hidden absolute top-4 right-4 text-pink-400 hover:text-pink-200 transition-colors z-10">
             <div id="play-icon" class="hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3V3z" /></svg>
@@ -89,14 +88,14 @@
             <div id="section-1" class="letter-section hidden"><p class="mb-6">Imagina ver aquí el nombre de esa persona especial. Esta es una demostración de cómo tu mensaje puede cobrar vida de una forma única y memorable, creando una experiencia que va más allá de las palabras.</p></div>
             <div id="section-2" class="letter-section hidden"><p class="mb-6">Cada párrafo de tu dedicatoria aparecerá de forma interactiva, como si estuvieras contando una historia. Esto captura la atención y la emoción desde el primer momento hasta el último, haciendo que tu mensaje sea inolvidable.</p></div>
             <div id="section-3" class="letter-section hidden"><p class="mb-6">Puedes personalizarlo todo: el texto, los colores e incluso agregar una canción de fondo o sus fotos más especiales. Este espacio está diseñado para reflejar tus sentimientos y contar su historia de una manera que sea solo suya.</p></div>
-            <div id="section-4" class="letter-section hidden"><p class="text-center font-semibold text-pink-400 mb-8 text-base sm:text-lg">El toque final es una hermosa animación que sella la carta, dejando un recuerdo imborrable. ¿Estás listo para crear tu propia dedicatoria web?</p></div>
+            <div id="section-4" class="letter-section hidden"><p class="text-center font-semibold text-pink-400 mb-4 text-base sm:text-lg">El toque final es una hermosa animación que sella la carta, dejando un recuerdo imborrable. ¿Estás listo para crear tu propia dedicatoria web?</p></div>
         </main>
         
         <div id="interactive-zone" class="text-center mt-4">
             <div id="continue-container" class="hidden"><button id="continue-button" class="transition-transform transform hover:scale-110"><svg class="w-14 h-14 text-pink-400 hover:text-pink-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="text-slate-400 text-sm">Toca para continuar</span></button></div>
         </div>
 
-        <footer id="letterFooter" class="text-right mt-8 hidden">
+        <footer id="letterFooter" class="text-right mt-4 hidden">
             <p class="font-dancing-script text-3xl sm:text-4xl text-pink-300">Con todo mi cariño,</p>
             <p class="font-dancing-script text-3xl sm:text-3xl text-slate-300 mt-1">[Tu nombre]</p>
         </footer>
@@ -105,38 +104,32 @@
             <button id="close-envelope-button" class="bg-pink-500 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-pink-600 transition-transform transform hover:scale-105 duration-300 text-lg">Cerrar demo</button>
         </div>
         
-        <!-- Contenedor del Botón de WhatsApp -->
         <div id="whatsapp-container" class="mt-12 text-center hidden">
             <a href="https://wa.me/51921926732?text=Quiero%20informaci%C3%B3n%20para%20dedicatoria%20Web" target="_blank" class="inline-block bg-green-500 text-white font-bold py-4 px-8 rounded-full shadow-lg hover:bg-green-600 transition-transform transform hover:scale-105 duration-300 text-lg">
                 ¿Quieres crear una dedicatoria así?
             </a>
         </div>
 
-        <!-- INICIO: Nueva Sección de Planes -->
         <div id="plans-container" class="mt-10 pt-8 border-t border-slate-700 hidden">
             <h2 class="font-dancing-script text-3xl sm:text-4xl text-pink-300 mb-8 text-center">Elige Tu Plan Ideal</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Plan Básico -->
-                <div class="bg-slate-700/40 p-6 rounded-xl border border-slate-600 shadow-lg hover:border-pink-400 transition-all duration-300 transform hover:-translate-y-1">
-                    <a href="https://wa.me/51921926732?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20Plan%20B%C3%A1sico." target="_blank" class="font-dancing-script text-3xl text-pink-400 hover:text-pink-300 transition-colors block text-center">Plan Básico</a>
-                    <p class="text-slate-400 mt-4 text-center text-sm leading-relaxed">Tu historia contada con <strong>texto y una melodía especial</strong>. Una dedicatoria web elegante que captura la esencia de tu mensaje.</p>
+                <div class="plan-card cursor-pointer bg-slate-700/40 p-6 rounded-xl border border-slate-600 shadow-lg hover:border-pink-400 transition-all duration-300 transform hover:-translate-y-1">
+                    <a href="https://wa.me/51921926732?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20Plan%20Cl%C3%A1sico." target="_blank" class="font-dancing-script text-3xl text-pink-400 hover:text-pink-300 transition-colors block text-center">Plan Clásico</a>
+                    <p class="text-slate-400 mt-4 text-center text-sm leading-relaxed">La dedicatoria perfecta para expresar tus sentimientos. Incluye <strong>tu texto personalizado y una melodía de fondo</strong> para crear un momento especial.</p>
                 </div>
 
-                <!-- Plan Intermedio -->
-                <div class="bg-slate-700/60 p-6 rounded-xl border-2 border-pink-500 shadow-lg shadow-pink-500/20 transform hover:-translate-y-1 transition-all duration-300">
-                    <a href="https://wa.me/51921926732?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20Plan%20Intermedio." target="_blank" class="font-dancing-script text-3xl text-pink-400 hover:text-pink-300 transition-colors block text-center">Plan Intermedio</a>
-                    <p class="text-slate-400 mt-4 text-center text-sm leading-relaxed">Añade <strong>imágenes y fotografías</strong> a tu dedicatoria. Un viaje visual y sonoro que da vida a tus recuerdos más preciados.</p>
+                <div class="plan-card cursor-pointer bg-slate-700/60 p-6 rounded-xl border-2 border-pink-500 shadow-lg shadow-pink-500/20 transform hover:-translate-y-1 transition-all duration-300">
+                    <a href="https://wa.me/51921926732?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20Plan%20Especial." target="_blank" class="font-dancing-script text-3xl text-pink-400 hover:text-pink-300 transition-colors block text-center">Plan Especial</a>
+                    <p class="text-slate-400 mt-4 text-center text-sm leading-relaxed">Una dedicatoria emotiva que combina <strong>texto, una melodía y una selección de imágenes</strong> para dar vida a tus recuerdos.</p>
                 </div>
 
-                <!-- Plan Avanzado -->
-                <div class="bg-slate-700/40 p-6 rounded-xl border border-slate-600 shadow-lg hover:border-pink-400 transition-all duration-300 transform hover:-translate-y-1">
-                    <a href="https://wa.me/51921926732?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20Plan%20Avanzado." target="_blank" class="font-dancing-script text-3xl text-pink-400 hover:text-pink-300 transition-colors block text-center">Plan Avanzado</a>
+                <div class="plan-card cursor-pointer bg-slate-700/40 p-6 rounded-xl border border-slate-600 shadow-lg hover:border-pink-400 transition-all duration-300 transform hover:-translate-y-1">
+                    <a href="https://wa.me/51921926732?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20Plan%20Premium." target="_blank" class="font-dancing-script text-3xl text-pink-400 hover:text-pink-300 transition-colors block text-center">Plan Premium</a>
                     <p class="text-slate-400 mt-4 text-center text-sm leading-relaxed">La experiencia <strong>totalmente personalizada</strong>. Incluye <strong>videos, animaciones</strong> y detalles únicos para una dedicatoria inolvidable.</p>
                 </div>
             </div>
         </div>
-        <!-- FIN: Nueva Sección de Planes -->
-    </div>
+        </div>
     
     <div id="envelope-container" class="hidden fixed inset-0 w-full h-full flex items-center justify-center pointer-events-none">
         <div id="envelope-overlay" class="w-64 h-64 relative">
@@ -155,11 +148,12 @@
         const letterFooter = document.getElementById('letterFooter');
         const continueContainer = document.getElementById('continue-container');
         const continueButton = document.getElementById('continue-button');
+        const interactiveZone = document.getElementById('interactive-zone'); // Definido para controlar el espacio
         const finalButtonContainer = document.getElementById('final-button-container');
         const closeEnvelopeButton = document.getElementById('close-envelope-button');
         const envelopeContainer = document.getElementById('envelope-container');
         const whatsappContainer = document.getElementById('whatsapp-container');
-        const plansContainer = document.getElementById('plans-container'); // <-- Elemento para los planes
+        const plansContainer = document.getElementById('plans-container');
         const backgroundMusic = document.getElementById('background-music');
         const musicControlButton = document.getElementById('music-control-button');
         const playIcon = document.getElementById('play-icon');
@@ -187,18 +181,18 @@
                 whatsappContainer.classList.remove('hidden');
                 whatsappContainer.classList.add('reveal-block-animation');
                 
-                // Muestra la sección de planes al final
                 plansContainer.classList.remove('hidden');
                 plansContainer.classList.add('reveal-block-animation');
                 
-                continueContainer.classList.add('button-fade-out');
+                // Oculta completamente la zona del botón "continuar" para eliminar el espacio
+                interactiveZone.classList.add('hidden'); 
             }
         }
 
         // Evento para el botón inicial "Ver demostración"
         openButton.addEventListener('click', () => {
             if (!musicStarted) {
-                backgroundMusic.play();
+                backgroundMusic.play().catch(e => console.error("Error al reproducir audio:", e));
                 musicStarted = true;
                 musicControlButton.classList.remove('hidden');
             }
@@ -220,7 +214,7 @@
         // Evento para el control de la música
         musicControlButton.addEventListener('click', () => {
             if (backgroundMusic.paused) {
-                backgroundMusic.play();
+                backgroundMusic.play().catch(e => console.error("Error al reproducir audio:", e));
                 playIcon.classList.add('hidden');
                 pauseIcon.classList.remove('hidden');
             } else {
@@ -245,6 +239,33 @@
                 envelopeContainer.classList.add('fade-in-start');
             }, { once: true });
         });
+
+        // ===============================================================
+        // == INICIO: SCRIPT PARA LA SELECCIÓN DE PLANES DINÁMICA ==
+        // ===============================================================
+        const planCards = document.querySelectorAll('.plan-card');
+
+        const unselectedClasses = ['bg-slate-700/40', 'border', 'border-slate-600', 'hover:border-pink-400'];
+        const selectedClasses = ['bg-slate-700/60', 'border-2', 'border-pink-500', 'shadow-lg', 'shadow-pink-500/20'];
+
+        planCards.forEach(card => {
+            card.addEventListener('click', function(event) {
+                if (event.target.tagName.toLowerCase() === 'a') {
+                    return;
+                }
+                
+                planCards.forEach(c => {
+                    c.classList.remove(...selectedClasses);
+                    c.classList.add(...unselectedClasses);
+                });
+
+                this.classList.remove(...unselectedClasses);
+                this.classList.add(...selectedClasses);
+            });
+        });
+        // ===============================================================
+        // == FIN: SCRIPT PARA LA SELECCIÓN DE PLANES DINÁMICA     ==
+        // ===============================================================
     </script>
 </body>
 </html>
