@@ -15,23 +15,13 @@
         .font-dancing-script {
             font-family: 'Dancing Script', cursive;
         }
-
-        /* --- NEW "Block" Text Reveal Animation --- */
         .reveal-block-animation {
             animation: revealBlock 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
         }
         @keyframes revealBlock {
-            from {
-                opacity: 0;
-                clip-path: inset(0 100% 0 0);
-            }
-            to {
-                opacity: 1;
-                clip-path: inset(0 0 0 0);
-            }
+            from { opacity: 0; clip-path: inset(0 100% 0 0); }
+            to { opacity: 1; clip-path: inset(0 0 0 0); }
         }
-
-        /* --- General Animations --- */
         .fade-in-start { animation: fadeInStart 1.5s ease-in-out forwards; }
         @keyframes fadeInStart { from { opacity: 0; } to { opacity: 1; } }
         
@@ -47,7 +37,6 @@
         .card-close-animation { animation: cardClose 1s ease-in forwards; }
         @keyframes cardClose { to { opacity: 0; transform: scale(0.8); visibility: hidden; } }
         
-        /* --- FINAL ENVELOPE ANIMATION --- */
         #envelope-overlay {
             animation: fadeOutExit 1.5s 2s forwards;
         }
@@ -60,13 +49,15 @@
             from { transform: rotateX(0deg); }
             to { transform: rotateX(180deg); }
         }
-
     </style>
 </head>
-<!-- New darker background for a more elegant, premium feel -->
 <body class="bg-gradient-to-br from-slate-900 to-gray-800 min-h-screen flex items-center justify-center p-4 overflow-x-hidden">
 
-    <!-- Introduction Screen -->
+    <audio id="background-music" loop>
+        <source src="mi-cancion.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
     <div id="introContainer" class="text-center fade-in-start w-full max-w-md mx-auto">
         <h1 class="font-dancing-script text-4xl sm:text-5xl md:text-6xl text-pink-300">Una sorpresa interactiva...</h1>
         <p class="text-slate-400 mt-4 text-lg sm:text-xl">Un regalo digital inolvidable</p>
@@ -78,16 +69,20 @@
         </button>
     </div>
 
-    <!-- Main Card Container -->
-    <div id="letterCard" class="bg-slate-800/80 backdrop-blur-sm shadow-2xl rounded-2xl max-w-2xl w-full p-6 sm:p-8 md:p-10 lg:p-12 mx-auto my-8 border-t-4 border-pink-500 hidden">
+    <div id="letterCard" class="bg-slate-800/80 backdrop-blur-sm shadow-2xl rounded-2xl max-w-2xl w-full p-6 sm:p-8 md:p-10 lg:p-12 mx-auto my-8 border-t-4 border-pink-500 hidden relative">
+        <!-- Botón para reproducir música manualmente si el autoplay falla -->
+        <button id="play-music-button" class="hidden absolute top-4 right-4 text-pink-400 hover:text-pink-200 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3V3z" />
+            </svg>
+        </button>
+
         <header id="letterHeader" class="text-center mb-8 hidden">
-            <!-- Generic placeholder for recipient -->
             <h1 class="font-dancing-script text-4xl sm:text-5xl text-pink-300">Para: [Persona a dedicar]</h1>
             <p class="text-slate-400 mt-2 text-base sm:text-lg">Una fecha especial</p>
         </header>
 
         <main id="letterBody" class="text-slate-300 text-base sm:text-lg leading-relaxed text-justify italic">
-            <!-- Generic placeholder text explaining the template -->
             <div id="section-1" class="letter-section hidden"><p class="mb-6">Imagina ver aquí el nombre de esa persona especial. Esta es una demostración de cómo tu mensaje puede cobrar vida de una forma única y memorable, creando una experiencia que va más allá de las palabras.</p></div>
             <div id="section-2" class="letter-section hidden"><p class="mb-6">Cada párrafo de tu dedicatoria aparecerá de forma interactiva, como si estuvieras contando una historia. Esto captura la atención y la emoción desde el primer momento hasta el último, haciendo que tu mensaje sea inolvidable.</p></div>
             <div id="section-3" class="letter-section hidden"><p class="mb-6">Puedes personalizarlo todo: el texto, los colores e incluso añadir una canción de fondo o vuestras fotos más especiales. Este espacio está diseñado para reflejar tus sentimientos y contar vuestra historia de una manera que sea solo vuestra.</p></div>
@@ -100,12 +95,10 @@
         </div>
 
         <footer id="letterFooter" class="text-right mt-8 hidden">
-             <!-- Generic placeholder for sender -->
             <p class="font-dancing-script text-3xl sm:text-4xl text-pink-300">Con todo mi cariño,</p>
             <p class="font-dancing-script text-3xl sm:text-3xl text-slate-300 mt-1">[Tu nombre]</p>
         </footer>
 
-        <!-- WhatsApp Contact Section -->
         <div id="whatsapp-container" class="mt-12 text-center hidden">
             <a href="https://wa.me/51921926732?text=Quiero%20informaci%C3%B3n%20para%20dedicatoria%20Web" target="_blank" class="inline-block bg-green-500 text-white font-bold py-4 px-8 rounded-full shadow-lg hover:bg-green-600 transition-transform transform hover:scale-105 duration-300 text-lg">
                 ¿Quieres crear una dedicatoria así?
@@ -113,20 +106,13 @@
         </div>
     </div>
     
-    <!-- Final Envelope Closing Animation -->
     <div id="envelope-container" class="hidden fixed inset-0 w-full h-full flex items-center justify-center pointer-events-none">
         <div id="envelope-overlay" class="w-64 h-64 relative">
             <svg viewBox="0 0 100 100" class="w-full h-full">
-                <rect x="0" y="25" width="100" height="50" fill="#2c2240"/>
-                <rect x="5" y="15" width="90" height="60" fill="#1e1b26" stroke="#4a4458" stroke-width="1"/>
-                <path d="M 0 25 L 50 50 L 0 75 Z" fill="#251e36"/>
-                <path d="M 100 25 L 50 50 L 100 75 Z" fill="#251e36"/>
-                <path d="M 0 75 L 50 50 L 100 75 Z" fill="#4c2c54"/>
-                <path id="envelope-flap" d="M 0 25 L 50 50 L 100 25 Z" fill="#4c2c54"/>
+                <rect x="0" y="25" width="100" height="50" fill="#2c2240"/><rect x="5" y="15" width="90" height="60" fill="#1e1b26" stroke="#4a4458" stroke-width="1"/><path d="M 0 25 L 50 50 L 0 75 Z" fill="#251e36"/><path d="M 100 25 L 50 50 L 100 75 Z" fill="#251e36"/><path d="M 0 75 L 50 50 L 100 75 Z" fill="#4c2c54"/><path id="envelope-flap" d="M 0 25 L 50 50 L 100 25 Z" fill="#4c2c54"/>
             </svg>
         </div>
     </div>
-
 
     <script>
         const openButton = document.getElementById('openLetterButton');
@@ -134,15 +120,14 @@
         const letterCard = document.getElementById('letterCard');
         const letterHeader = document.getElementById('letterHeader');
         const letterFooter = document.getElementById('letterFooter');
-        
         const continueContainer = document.getElementById('continue-container');
         const continueButton = document.getElementById('continue-button');
-        
         const finalButtonContainer = document.getElementById('final-button-container');
         const closeEnvelopeButton = document.getElementById('close-envelope-button');
         const envelopeContainer = document.getElementById('envelope-container');
-        
         const whatsappContainer = document.getElementById('whatsapp-container');
+        const backgroundMusic = document.getElementById('background-music');
+        const playMusicButton = document.getElementById('play-music-button'); // New button
 
         const letterSections = document.querySelectorAll('.letter-section');
         let currentSectionIndex = 0;
@@ -154,14 +139,10 @@
                 section.classList.add('reveal-block-animation');
                 currentSectionIndex++;
             } else {
-                // All sections revealed, show footer and WhatsApp button
                 letterFooter.classList.remove('hidden');
                 letterFooter.classList.add('reveal-block-animation');
-                
                 whatsappContainer.classList.remove('hidden');
                 whatsappContainer.classList.add('reveal-block-animation');
-                
-                // Swap the control buttons
                 continueContainer.classList.add('button-fade-out');
                 finalButtonContainer.classList.remove('hidden');
                 finalButtonContainer.classList.add('reveal-block-animation');
@@ -169,12 +150,21 @@
         }
 
         openButton.addEventListener('click', () => {
+            // Attempt to play music
+            let playPromise = backgroundMusic.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    // Autoplay was prevented. Show the manual play button.
+                    console.log("Autoplay bloqueado. Mostrando botón manual.");
+                    playMusicButton.classList.remove('hidden');
+                });
+            }
+
             introContainer.classList.add('fade-out-exit');
             introContainer.addEventListener('animationend', () => {
                 introContainer.classList.add('hidden');
                 letterCard.classList.remove('hidden');
                 letterCard.classList.add('fade-in-start');
-                
                 letterHeader.classList.remove('hidden');
                 letterHeader.classList.add('reveal-block-animation');
                 revealNextPart();
@@ -183,9 +173,17 @@
             }, { once: true });
         });
 
+        // Event listener for the new manual play button
+        playMusicButton.addEventListener('click', () => {
+            backgroundMusic.play();
+            playMusicButton.classList.add('hidden'); // Hide after clicking
+        });
+
         continueButton.addEventListener('click', revealNextPart);
 
         closeEnvelopeButton.addEventListener('click', () => {
+            backgroundMusic.pause();
+            backgroundMusic.currentTime = 0;
             letterCard.classList.add('card-close-animation');
             letterCard.addEventListener('animationend', () => {
                 envelopeContainer.classList.remove('hidden');
