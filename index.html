@@ -70,16 +70,13 @@
     </div>
 
     <div id="letterCard" class="bg-slate-800/80 backdrop-blur-sm shadow-2xl rounded-2xl max-w-2xl w-full p-6 sm:p-8 md:p-10 lg:p-12 mx-auto my-8 border-t-4 border-pink-500 hidden relative">
+        <!-- Botón para controlar la música (Play/Pause) -->
         <button id="music-control-button" class="hidden absolute top-4 right-4 text-pink-400 hover:text-pink-200 transition-colors z-10">
             <div id="play-icon" class="hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3V3z" />
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3V3z" /></svg>
             </div>
             <div id="pause-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5z" clip-rule="evenodd" />
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5z" clip-rule="evenodd" /></svg>
             </div>
         </button>
 
@@ -107,12 +104,38 @@
         <div id="final-button-container" class="hidden text-center mt-8">
             <button id="close-envelope-button" class="bg-pink-500 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-pink-600 transition-transform transform hover:scale-105 duration-300 text-lg">Cerrar demo</button>
         </div>
-
+        
+        <!-- Contenedor del Botón de WhatsApp -->
         <div id="whatsapp-container" class="mt-12 text-center hidden">
             <a href="https://wa.me/51921926732?text=Quiero%20informaci%C3%B3n%20para%20dedicatoria%20Web" target="_blank" class="inline-block bg-green-500 text-white font-bold py-4 px-8 rounded-full shadow-lg hover:bg-green-600 transition-transform transform hover:scale-105 duration-300 text-lg">
                 ¿Quieres crear una dedicatoria así?
             </a>
         </div>
+
+        <!-- INICIO: Nueva Sección de Planes -->
+        <div id="plans-container" class="mt-10 pt-8 border-t border-slate-700 hidden">
+            <h2 class="font-dancing-script text-3xl sm:text-4xl text-pink-300 mb-8 text-center">Elige Tu Plan Ideal</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Plan Básico -->
+                <div class="bg-slate-700/40 p-6 rounded-xl border border-slate-600 shadow-lg hover:border-pink-400 transition-all duration-300 transform hover:-translate-y-1">
+                    <a href="https://wa.me/51921926732?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20Plan%20B%C3%A1sico." target="_blank" class="font-dancing-script text-3xl text-pink-400 hover:text-pink-300 transition-colors block text-center">Plan Básico</a>
+                    <p class="text-slate-400 mt-4 text-center text-sm leading-relaxed">Tu historia contada con <strong>texto y una melodía especial</strong>. Una dedicatoria web elegante que captura la esencia de tu mensaje.</p>
+                </div>
+
+                <!-- Plan Intermedio -->
+                <div class="bg-slate-700/60 p-6 rounded-xl border-2 border-pink-500 shadow-lg shadow-pink-500/20 transform hover:-translate-y-1 transition-all duration-300">
+                    <a href="https://wa.me/51921926732?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20Plan%20Intermedio." target="_blank" class="font-dancing-script text-3xl text-pink-400 hover:text-pink-300 transition-colors block text-center">Plan Intermedio</a>
+                    <p class="text-slate-400 mt-4 text-center text-sm leading-relaxed">Añade <strong>imágenes y fotografías</strong> a tu dedicatoria. Un viaje visual y sonoro que da vida a tus recuerdos más preciados.</p>
+                </div>
+
+                <!-- Plan Avanzado -->
+                <div class="bg-slate-700/40 p-6 rounded-xl border border-slate-600 shadow-lg hover:border-pink-400 transition-all duration-300 transform hover:-translate-y-1">
+                    <a href="https://wa.me/51921926732?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20Plan%20Avanzado." target="_blank" class="font-dancing-script text-3xl text-pink-400 hover:text-pink-300 transition-colors block text-center">Plan Avanzado</a>
+                    <p class="text-slate-400 mt-4 text-center text-sm leading-relaxed">La experiencia <strong>totalmente personalizada</strong>. Incluye <strong>videos, animaciones</strong> y detalles únicos para una dedicatoria inolvidable.</p>
+                </div>
+            </div>
+        </div>
+        <!-- FIN: Nueva Sección de Planes -->
     </div>
     
     <div id="envelope-container" class="hidden fixed inset-0 w-full h-full flex items-center justify-center pointer-events-none">
@@ -124,6 +147,7 @@
     </div>
 
     <script>
+        // Declaración de constantes para los elementos del DOM
         const openButton = document.getElementById('openLetterButton');
         const introContainer = document.getElementById('introContainer');
         const letterCard = document.getElementById('letterCard');
@@ -135,6 +159,7 @@
         const closeEnvelopeButton = document.getElementById('close-envelope-button');
         const envelopeContainer = document.getElementById('envelope-container');
         const whatsappContainer = document.getElementById('whatsapp-container');
+        const plansContainer = document.getElementById('plans-container'); // <-- Elemento para los planes
         const backgroundMusic = document.getElementById('background-music');
         const musicControlButton = document.getElementById('music-control-button');
         const playIcon = document.getElementById('play-icon');
@@ -144,6 +169,7 @@
         let currentSectionIndex = 0;
         let musicStarted = false;
 
+        // Función para revelar las secciones de la carta una por una
         function revealNextPart() {
             if (currentSectionIndex < letterSections.length) {
                 const section = letterSections[currentSectionIndex];
@@ -151,18 +177,26 @@
                 section.classList.add('reveal-block-animation');
                 currentSectionIndex++;
             } else {
+                // Muestra los elementos finales cuando se terminan las secciones
                 letterFooter.classList.remove('hidden');
                 letterFooter.classList.add('reveal-block-animation');
-                whatsappContainer.classList.remove('hidden');
-                whatsappContainer.classList.add('reveal-block-animation');
-                continueContainer.classList.add('button-fade-out');
+                
                 finalButtonContainer.classList.remove('hidden');
                 finalButtonContainer.classList.add('reveal-block-animation');
+
+                whatsappContainer.classList.remove('hidden');
+                whatsappContainer.classList.add('reveal-block-animation');
+                
+                // Muestra la sección de planes al final
+                plansContainer.classList.remove('hidden');
+                plansContainer.classList.add('reveal-block-animation');
+                
+                continueContainer.classList.add('button-fade-out');
             }
         }
 
+        // Evento para el botón inicial "Ver demostración"
         openButton.addEventListener('click', () => {
-            // **CAMBIO**: La música inicia aquí
             if (!musicStarted) {
                 backgroundMusic.play();
                 musicStarted = true;
@@ -183,6 +217,7 @@
             }, { once: true });
         });
         
+        // Evento para el control de la música
         musicControlButton.addEventListener('click', () => {
             if (backgroundMusic.paused) {
                 backgroundMusic.play();
@@ -195,11 +230,12 @@
             }
         });
 
+        // Evento para continuar la lectura de la carta
         continueButton.addEventListener('click', () => {
-            // **CAMBIO**: La lógica para iniciar la música se movió al botón "openButton"
             revealNextPart();
         });
 
+        // Evento para cerrar la carta y mostrar la animación del sobre
         closeEnvelopeButton.addEventListener('click', () => {
             backgroundMusic.pause();
             backgroundMusic.currentTime = 0;
