@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para ti, Pamela</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lora', serif;
+        }
+        .font-dancing-script {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* --- NEW "Block" Text Reveal Animation --- */
+        .reveal-block-animation {
+            /* This animation reveals the text with a "wipe" effect without sliding */
+            animation: revealBlock 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+        }
+        @keyframes revealBlock {
+            from {
+                opacity: 0;
+                clip-path: inset(0 100% 0 0); /* Reveals from left to right */
+            }
+            to {
+                opacity: 1;
+                clip-path: inset(0 0 0 0);
+            }
+        }
+
+        /* --- General Animations --- */
+        .fade-in-start { animation: fadeInStart 1.5s ease-in-out forwards; }
+        @keyframes fadeInStart { from { opacity: 0; } to { opacity: 1; } }
+        
+        .fade-out-exit { animation: fadeOutExit 1s forwards; }
+        @keyframes fadeOutExit { to { opacity: 0; transform: scale(0.9); visibility: hidden; } }
+
+        .heart-beat { animation: beat 1.5s infinite ease-in-out; }
+        @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+        .button-fade-out { animation: buttonFadeOut 0.5s ease-out forwards; }
+        @keyframes buttonFadeOut { to { opacity: 0; transform: scale(0.8); visibility: hidden; } }
+
+        .card-close-animation { animation: cardClose 1s ease-in forwards; }
+        @keyframes cardClose { to { opacity: 0; transform: scale(0.8); visibility: hidden; } }
+        
+        /* --- FINAL ENVELOPE ANIMATION --- */
+        #envelope-overlay {
+            /* This animation fades the entire envelope out at the end */
+            animation: fadeOutExit 1.5s 2s forwards; /* Starts after a 2s delay */
+        }
+        
+        #envelope-flap {
+            /* This animation closes the envelope flap */
+            transform-origin: top center;
+            animation: closeFlap 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.5s forwards; /* Starts after a 0.5s delay */
+        }
+        @keyframes closeFlap {
+            from { transform: rotateX(0deg); }
+            to { transform: rotateX(180deg); }
+        }
+
+    </style>
+</head>
+<body class="bg-gradient-to-br from-rose-50 to-amber-100 min-h-screen flex items-center justify-center p-4 overflow-x-hidden">
+
+    <!-- Introduction Screen -->
+    <div id="introContainer" class="text-center fade-in-start w-full max-w-md mx-auto">
+        <h1 class="font-dancing-script text-4xl sm:text-5xl md:text-6xl text-rose-800">Una sorpresa para ti...</h1>
+        <p class="text-amber-700 mt-4 text-lg sm:text-xl">Mi amor</p>
+        <div class="my-10">
+            <svg class="w-16 h-16 sm:w-20 sm:h-20 text-rose-400 heart-beat inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </div>
+        <button id="openLetterButton" class="bg-rose-400 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-rose-500 transition-transform transform hover:scale-105 duration-300 text-lg">
+            Ábrela
+        </button>
+    </div>
+
+    <!-- Main Letter Container -->
+    <div id="letterCard" class="bg-white/90 backdrop-blur-sm shadow-2xl rounded-2xl max-w-2xl w-full p-6 sm:p-8 md:p-10 lg:p-12 mx-auto my-8 border-t-4 border-rose-300 hidden">
+        <header id="letterHeader" class="text-center mb-8 hidden">
+            <h1 class="font-dancing-script text-4xl sm:text-5xl text-rose-800">Mi Adorada Pamela</h1>
+            <p class="text-amber-700 mt-2 text-base sm:text-lg">Nuestro 07 de cada mes</p>
+        </header>
+
+        <main id="letterBody" class="text-gray-700 text-base sm:text-lg leading-relaxed text-justify italic">
+            <!-- Full text content is here, but split for animation -->
+            <div id="section-1" class="letter-section hidden"><p class="mb-6">Hoy el calendario me sonríe cómplice, marcando nuestro día, ese 07 que se ha vuelto el faro en mi calendario, el recordatorio luminoso de la fortuna que tengo al tenerte en mi vida. Un día como hoy, el universo conspiró a nuestro favor, y desde entonces, cada mes se siente como un nuevo capítulo en el libro más hermoso que jamás he leído: nuestra historia.</p></div>
+            <div id="section-2" class="letter-section hidden"><p class="mb-6">No quiero que este sea solo un saludo más. Quiero que estas palabras intenten, aunque sea de forma imperfecta, dibujar la inmensidad de lo que siento por ti. Eres esa melodía que no sabía que le faltaba a mi alma, la pieza exacta que encajó sin forzar, transformando mi mundo en un lugar más cálido, más brillante, más real.</p></div>
+            <div id="section-3" class="letter-section hidden"><p class="mb-6">Amo, con una intensidad que a veces me asusta, cada pequeño universo que habita en ti. Amo la forma en que tus ojos cuentan historias sin necesidad de palabras, la manera en que tu risa tiene el poder de desvanecer cualquier tormenta en mi mente. Amo tu actitud ante la vida, esa mezcla de fuerza y ternura que te hace tan única, tan tú. Pero más allá de todas esas cosas que adoro, amo el todo que eres. Eres un ser de luz, una persona maravillosa cuya bondad y esencia me inspiran a ser un mejor hombre cada día.</p></div>
+            <div id="section-4" class="letter-section hidden"><p class="mb-6">Contigo he aprendido que el amor no se trata de contar los días, sino de hacer que cada día cuente. Y a tu lado, cada amanecer es una promesa, cada anochecer una paz que solo tu presencia me da. Eres mi ancla y mi vela, mi puerto seguro y mi mar abierto. Eres la aventura que siempre soñé y el hogar al que siempre quiero volver.</p></div>
+            <div id="section-5" class="letter-section hidden"><p class="mb-6">Gracias por ser mi compañera de viaje, por tu paciencia en mis días grises y por ser la celebración en mis momentos de alegría. Gracias por cada confidencia, por cada sueño compartido y por construir a mi lado este amor tan nuestro, tan fuerte y tan lleno de vida.</p></div>
+            <div id="section-6" class="letter-section hidden"><p class="text-center font-semibold text-rose-700 mb-8 text-base sm:text-lg">En este día que es nuestro, quiero que sepas que mi amor por ti crece con cada latido de mi corazón. Eres y serás siempre lo más importante para mí.</p></div>
+        </main>
+        
+        <div id="interactive-zone" class="text-center mt-4">
+            <div id="continue-container" class="hidden"><button id="continue-button" class="transition-transform transform hover:scale-110"><svg class="w-14 h-14 text-rose-300 hover:text-rose-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="text-rose-400 text-sm">Toca el corazón</span></button></div>
+            <div id="final-button-container" class="hidden"><button id="close-envelope-button" class="bg-rose-400 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-rose-500 transition-transform transform hover:scale-105 duration-300 text-lg">Sellar la carta</button></div>
+        </div>
+
+        <footer id="letterFooter" class="text-right mt-8 hidden">
+            <p class="font-dancing-script text-3xl sm:text-4xl text-rose-800">Feliz día, mi amor.</p>
+            <p class="text-amber-800 text-lg sm:text-xl mt-2">Con todo mi amor y mi ser,</p>
+            <p class="font-dancing-script text-3xl sm:text-3xl text-amber-900 mt-1">Jason</p>
+        </footer>
+    </div>
+    
+    <!-- Final Envelope Closing Animation -->
+    <div id="envelope-container" class="hidden fixed inset-0 w-full h-full flex items-center justify-center pointer-events-none">
+        <div id="envelope-overlay" class="w-64 h-64 relative">
+             <!-- SVG for the envelope -->
+            <svg viewBox="0 0 100 100" class="w-full h-full">
+                <!-- Back of envelope -->
+                <rect x="0" y="25" width="100" height="50" fill="#fde4e4"/>
+                <!-- Letter inside -->
+                <rect x="5" y="15" width="90" height="60" fill="white" stroke="#e7e5e4" stroke-width="1"/>
+                <!-- Front of envelope (left and right triangles) -->
+                <path d="M 0 25 L 50 50 L 0 75 Z" fill="#fce9e9"/>
+                <path d="M 100 25 L 50 50 L 100 75 Z" fill="#fce9e9"/>
+                <!-- Bottom flap -->
+                <path d="M 0 75 L 50 50 L 100 75 Z" fill="#fbcfe8"/>
+                <!-- Top flap (this one will animate) -->
+                <path id="envelope-flap" d="M 0 25 L 50 50 L 100 25 Z" fill="#fbcfe8"/>
+            </svg>
+        </div>
+    </div>
+
+
+    <script>
+        const openButton = document.getElementById('openLetterButton');
+        const introContainer = document.getElementById('introContainer');
+        const letterCard = document.getElementById('letterCard');
+        const letterHeader = document.getElementById('letterHeader');
+        const letterFooter = document.getElementById('letterFooter');
+        
+        const continueContainer = document.getElementById('continue-container');
+        const continueButton = document.getElementById('continue-button');
+        
+        const finalButtonContainer = document.getElementById('final-button-container');
+        const closeEnvelopeButton = document.getElementById('close-envelope-button');
+        const envelopeContainer = document.getElementById('envelope-container');
+        
+        const letterSections = document.querySelectorAll('.letter-section');
+        let currentSectionIndex = 0;
+
+        function revealNextPart() {
+            if (currentSectionIndex < letterSections.length) {
+                const section = letterSections[currentSectionIndex];
+                section.classList.remove('hidden');
+                section.classList.add('reveal-block-animation');
+                currentSectionIndex++;
+            } else {
+                letterFooter.classList.remove('hidden');
+                letterFooter.classList.add('reveal-block-animation');
+                
+                continueContainer.classList.add('button-fade-out');
+                finalButtonContainer.classList.remove('hidden');
+                finalButtonContainer.classList.add('reveal-block-animation');
+            }
+        }
+
+        openButton.addEventListener('click', () => {
+            introContainer.classList.add('fade-out-exit');
+            introContainer.addEventListener('animationend', () => {
+                introContainer.classList.add('hidden');
+                letterCard.classList.remove('hidden');
+                letterCard.classList.add('fade-in-start');
+                
+                letterHeader.classList.remove('hidden');
+                letterHeader.classList.add('reveal-block-animation');
+                revealNextPart();
+                continueContainer.classList.remove('hidden');
+                continueContainer.classList.add('reveal-block-animation');
+            }, { once: true });
+        });
+
+        continueButton.addEventListener('click', revealNextPart);
+
+        closeEnvelopeButton.addEventListener('click', () => {
+            letterCard.classList.add('card-close-animation');
+            letterCard.addEventListener('animationend', () => {
+                envelopeContainer.classList.remove('hidden');
+                envelopeContainer.classList.add('fade-in-start');
+            }, { once: true });
+        });
+    </script>
+</body>
+</html>
