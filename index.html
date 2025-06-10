@@ -54,7 +54,8 @@
 <body class="bg-gradient-to-br from-slate-900 to-gray-800 min-h-screen flex items-center justify-center p-4 overflow-x-hidden">
 
     <audio id="background-music" loop>
-        <source src="mi-cancion.mp3" type="audio/mpeg">
+        <!-- Link directo a tu archivo MP3 en archive.org -->
+        <source src="https://archive.org/download/mirame-remix-tiktok/Mirame%20Remix%20TikTok.mp3" type="audio/mpeg">
         Tu navegador no soporta el elemento de audio.
     </audio>
 
@@ -70,11 +71,20 @@
     </div>
 
     <div id="letterCard" class="bg-slate-800/80 backdrop-blur-sm shadow-2xl rounded-2xl max-w-2xl w-full p-6 sm:p-8 md:p-10 lg:p-12 mx-auto my-8 border-t-4 border-pink-500 hidden relative">
-        <!-- Botón para reproducir música manualmente si el autoplay falla -->
-        <button id="play-music-button" class="hidden absolute top-4 right-4 text-pink-400 hover:text-pink-200 transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3V3z" />
-            </svg>
+        <!-- Botón para controlar la música (Play/Pause) -->
+        <button id="music-control-button" class="hidden absolute top-4 right-4 text-pink-400 hover:text-pink-200 transition-colors z-10">
+            <!-- Icono de Play (nota musical) -->
+            <div id="play-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3V3z" />
+                </svg>
+            </div>
+            <!-- Icono de Pausa (nota musical tachada) - inicialmente oculto -->
+            <div id="pause-icon" class="hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5z" clip-rule="evenodd" />
+                </svg>
+            </div>
         </button>
 
         <header id="letterHeader" class="text-center mb-8 hidden">
@@ -127,7 +137,9 @@
         const envelopeContainer = document.getElementById('envelope-container');
         const whatsappContainer = document.getElementById('whatsapp-container');
         const backgroundMusic = document.getElementById('background-music');
-        const playMusicButton = document.getElementById('play-music-button'); // New button
+        const musicControlButton = document.getElementById('music-control-button');
+        const playIcon = document.getElementById('play-icon');
+        const pauseIcon = document.getElementById('pause-icon');
 
         const letterSections = document.querySelectorAll('.letter-section');
         let currentSectionIndex = 0;
@@ -150,21 +162,15 @@
         }
 
         openButton.addEventListener('click', () => {
-            // Attempt to play music
-            let playPromise = backgroundMusic.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    // Autoplay was prevented. Show the manual play button.
-                    console.log("Autoplay bloqueado. Mostrando botón manual.");
-                    playMusicButton.classList.remove('hidden');
-                });
-            }
-
             introContainer.classList.add('fade-out-exit');
             introContainer.addEventListener('animationend', () => {
                 introContainer.classList.add('hidden');
                 letterCard.classList.remove('hidden');
                 letterCard.classList.add('fade-in-start');
+                
+                // Show the manual music control button
+                musicControlButton.classList.remove('hidden');
+                
                 letterHeader.classList.remove('hidden');
                 letterHeader.classList.add('reveal-block-animation');
                 revealNextPart();
@@ -172,11 +178,18 @@
                 continueContainer.classList.add('reveal-block-animation');
             }, { once: true });
         });
-
-        // Event listener for the new manual play button
-        playMusicButton.addEventListener('click', () => {
-            backgroundMusic.play();
-            playMusicButton.classList.add('hidden'); // Hide after clicking
+        
+        musicControlButton.addEventListener('click', () => {
+            // Check if the music is paused, then play or pause accordingly
+            if (backgroundMusic.paused) {
+                backgroundMusic.play();
+                playIcon.classList.add('hidden');
+                pauseIcon.classList.remove('hidden');
+            } else {
+                backgroundMusic.pause();
+                playIcon.classList.remove('hidden');
+                pauseIcon.classList.add('hidden');
+            }
         });
 
         continueButton.addEventListener('click', revealNextPart);
