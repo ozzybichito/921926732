@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para ti, Pamela</title>
+    <title>Dedicatoria Web Interactiva</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,13 +18,12 @@
 
         /* --- NEW "Block" Text Reveal Animation --- */
         .reveal-block-animation {
-            /* This animation reveals the text with a "wipe" effect without sliding */
             animation: revealBlock 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
         }
         @keyframes revealBlock {
             from {
                 opacity: 0;
-                clip-path: inset(0 100% 0 0); /* Reveals from left to right */
+                clip-path: inset(0 100% 0 0);
             }
             to {
                 opacity: 1;
@@ -50,14 +49,12 @@
         
         /* --- FINAL ENVELOPE ANIMATION --- */
         #envelope-overlay {
-            /* This animation fades the entire envelope out at the end */
-            animation: fadeOutExit 1.5s 2s forwards; /* Starts after a 2s delay */
+            animation: fadeOutExit 1.5s 2s forwards;
         }
         
         #envelope-flap {
-            /* This animation closes the envelope flap */
             transform-origin: top center;
-            animation: closeFlap 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.5s forwards; /* Starts after a 0.5s delay */
+            animation: closeFlap 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.5s forwards;
         }
         @keyframes closeFlap {
             from { transform: rotateX(0deg); }
@@ -66,65 +63,66 @@
 
     </style>
 </head>
-<body class="bg-gradient-to-br from-rose-50 to-amber-100 min-h-screen flex items-center justify-center p-4 overflow-x-hidden">
+<!-- New darker background for a more elegant, premium feel -->
+<body class="bg-gradient-to-br from-slate-900 to-gray-800 min-h-screen flex items-center justify-center p-4 overflow-x-hidden">
 
     <!-- Introduction Screen -->
     <div id="introContainer" class="text-center fade-in-start w-full max-w-md mx-auto">
-        <h1 class="font-dancing-script text-4xl sm:text-5xl md:text-6xl text-rose-800">Una sorpresa para ti...</h1>
-        <p class="text-amber-700 mt-4 text-lg sm:text-xl">Mi amor</p>
+        <h1 class="font-dancing-script text-4xl sm:text-5xl md:text-6xl text-pink-300">Una sorpresa interactiva...</h1>
+        <p class="text-slate-400 mt-4 text-lg sm:text-xl">Un regalo digital inolvidable</p>
         <div class="my-10">
-            <svg class="w-16 h-16 sm:w-20 sm:h-20 text-rose-400 heart-beat inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <svg class="w-16 h-16 sm:w-20 sm:h-20 text-pink-400 heart-beat inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
         </div>
-        <button id="openLetterButton" class="bg-rose-400 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-rose-500 transition-transform transform hover:scale-105 duration-300 text-lg">
-            Ábrela
+        <button id="openLetterButton" class="bg-pink-500 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-pink-600 transition-transform transform hover:scale-105 duration-300 text-lg">
+            Ver demostración
         </button>
     </div>
 
-    <!-- Main Letter Container -->
-    <div id="letterCard" class="bg-white/90 backdrop-blur-sm shadow-2xl rounded-2xl max-w-2xl w-full p-6 sm:p-8 md:p-10 lg:p-12 mx-auto my-8 border-t-4 border-rose-300 hidden">
+    <!-- Main Card Container -->
+    <div id="letterCard" class="bg-slate-800/80 backdrop-blur-sm shadow-2xl rounded-2xl max-w-2xl w-full p-6 sm:p-8 md:p-10 lg:p-12 mx-auto my-8 border-t-4 border-pink-500 hidden">
         <header id="letterHeader" class="text-center mb-8 hidden">
-            <h1 class="font-dancing-script text-4xl sm:text-5xl text-rose-800">Mi Adorada Pamela</h1>
-            <p class="text-amber-700 mt-2 text-base sm:text-lg">Nuestro 07 de cada mes</p>
+            <!-- Generic placeholder for recipient -->
+            <h1 class="font-dancing-script text-4xl sm:text-5xl text-pink-300">Para: [Persona a dedicar]</h1>
+            <p class="text-slate-400 mt-2 text-base sm:text-lg">Una fecha especial</p>
         </header>
 
-        <main id="letterBody" class="text-gray-700 text-base sm:text-lg leading-relaxed text-justify italic">
-            <!-- Full text content is here, but split for animation -->
-            <div id="section-1" class="letter-section hidden"><p class="mb-6">Hoy el calendario me sonríe cómplice, marcando nuestro día, ese 07 que se ha vuelto el faro en mi calendario, el recordatorio luminoso de la fortuna que tengo al tenerte en mi vida. Un día como hoy, el universo conspiró a nuestro favor, y desde entonces, cada mes se siente como un nuevo capítulo en el libro más hermoso que jamás he leído: nuestra historia.</p></div>
-            <div id="section-2" class="letter-section hidden"><p class="mb-6">No quiero que este sea solo un saludo más. Quiero que estas palabras intenten, aunque sea de forma imperfecta, dibujar la inmensidad de lo que siento por ti. Eres esa melodía que no sabía que le faltaba a mi alma, la pieza exacta que encajó sin forzar, transformando mi mundo en un lugar más cálido, más brillante, más real.</p></div>
-            <div id="section-3" class="letter-section hidden"><p class="mb-6">Amo, con una intensidad que a veces me asusta, cada pequeño universo que habita en ti. Amo la forma en que tus ojos cuentan historias sin necesidad de palabras, la manera en que tu risa tiene el poder de desvanecer cualquier tormenta en mi mente. Amo tu actitud ante la vida, esa mezcla de fuerza y ternura que te hace tan única, tan tú. Pero más allá de todas esas cosas que adoro, amo el todo que eres. Eres un ser de luz, una persona maravillosa cuya bondad y esencia me inspiran a ser un mejor hombre cada día.</p></div>
-            <div id="section-4" class="letter-section hidden"><p class="mb-6">Contigo he aprendido que el amor no se trata de contar los días, sino de hacer que cada día cuente. Y a tu lado, cada amanecer es una promesa, cada anochecer una paz que solo tu presencia me da. Eres mi ancla y mi vela, mi puerto seguro y mi mar abierto. Eres la aventura que siempre soñé y el hogar al que siempre quiero volver.</p></div>
-            <div id="section-5" class="letter-section hidden"><p class="mb-6">Gracias por ser mi compañera de viaje, por tu paciencia en mis días grises y por ser la celebración en mis momentos de alegría. Gracias por cada confidencia, por cada sueño compartido y por construir a mi lado este amor tan nuestro, tan fuerte y tan lleno de vida.</p></div>
-            <div id="section-6" class="letter-section hidden"><p class="text-center font-semibold text-rose-700 mb-8 text-base sm:text-lg">En este día que es nuestro, quiero que sepas que mi amor por ti crece con cada latido de mi corazón. Eres y serás siempre lo más importante para mí.</p></div>
+        <main id="letterBody" class="text-slate-300 text-base sm:text-lg leading-relaxed text-justify italic">
+            <!-- Generic placeholder text explaining the template -->
+            <div id="section-1" class="letter-section hidden"><p class="mb-6">Imagina ver aquí el nombre de esa persona especial. Esta es una demostración de cómo tu mensaje puede cobrar vida de una forma única y memorable, creando una experiencia que va más allá de las palabras.</p></div>
+            <div id="section-2" class="letter-section hidden"><p class="mb-6">Cada párrafo de tu dedicatoria aparecerá de forma interactiva, como si estuvieras contando una historia. Esto captura la atención y la emoción desde el primer momento hasta el último, haciendo que tu mensaje sea inolvidable.</p></div>
+            <div id="section-3" class="letter-section hidden"><p class="mb-6">Puedes personalizarlo todo: el texto, los colores e incluso añadir una canción de fondo o vuestras fotos más especiales. Este espacio está diseñado para reflejar tus sentimientos y contar vuestra historia de una manera que sea solo vuestra.</p></div>
+            <div id="section-4" class="letter-section hidden"><p class="text-center font-semibold text-pink-400 mb-8 text-base sm:text-lg">El toque final es una hermosa animación que sella la carta, dejando un recuerdo imborrable. ¿Estás listo para crear tu propia dedicatoria web?</p></div>
         </main>
         
         <div id="interactive-zone" class="text-center mt-4">
-            <div id="continue-container" class="hidden"><button id="continue-button" class="transition-transform transform hover:scale-110"><svg class="w-14 h-14 text-rose-300 hover:text-rose-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="text-rose-400 text-sm">Toca el corazón</span></button></div>
-            <div id="final-button-container" class="hidden"><button id="close-envelope-button" class="bg-rose-400 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-rose-500 transition-transform transform hover:scale-105 duration-300 text-lg">Sellar la carta</button></div>
+            <div id="continue-container" class="hidden"><button id="continue-button" class="transition-transform transform hover:scale-110"><svg class="w-14 h-14 text-pink-400 hover:text-pink-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="text-slate-400 text-sm">Toca para continuar</span></button></div>
+            <div id="final-button-container" class="hidden"><button id="close-envelope-button" class="bg-pink-500 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-pink-600 transition-transform transform hover:scale-105 duration-300 text-lg">Cerrar demo</button></div>
         </div>
 
         <footer id="letterFooter" class="text-right mt-8 hidden">
-            <p class="font-dancing-script text-3xl sm:text-4xl text-rose-800">Feliz día, mi amor.</p>
-            <p class="text-amber-800 text-lg sm:text-xl mt-2">Con todo mi amor y mi ser,</p>
-            <p class="font-dancing-script text-3xl sm:text-3xl text-amber-900 mt-1">Jason</p>
+             <!-- Generic placeholder for sender -->
+            <p class="font-dancing-script text-3xl sm:text-4xl text-pink-300">Con todo mi cariño,</p>
+            <p class="font-dancing-script text-3xl sm:text-3xl text-slate-300 mt-1">[Tu nombre]</p>
         </footer>
+
+        <!-- WhatsApp Contact Section -->
+        <div id="whatsapp-container" class="mt-12 text-center hidden">
+            <a href="https://wa.me/51921926732?text=Quiero%20informaci%C3%B3n%20para%20dedicatoria%20Web" target="_blank" class="inline-block bg-green-500 text-white font-bold py-4 px-8 rounded-full shadow-lg hover:bg-green-600 transition-transform transform hover:scale-105 duration-300 text-lg">
+                ¿Quieres crear una dedicatoria así?
+            </a>
+        </div>
     </div>
     
     <!-- Final Envelope Closing Animation -->
     <div id="envelope-container" class="hidden fixed inset-0 w-full h-full flex items-center justify-center pointer-events-none">
         <div id="envelope-overlay" class="w-64 h-64 relative">
-             <!-- SVG for the envelope -->
             <svg viewBox="0 0 100 100" class="w-full h-full">
-                <!-- Back of envelope -->
-                <rect x="0" y="25" width="100" height="50" fill="#fde4e4"/>
-                <!-- Letter inside -->
-                <rect x="5" y="15" width="90" height="60" fill="white" stroke="#e7e5e4" stroke-width="1"/>
-                <!-- Front of envelope (left and right triangles) -->
-                <path d="M 0 25 L 50 50 L 0 75 Z" fill="#fce9e9"/>
-                <path d="M 100 25 L 50 50 L 100 75 Z" fill="#fce9e9"/>
-                <!-- Bottom flap -->
-                <path d="M 0 75 L 50 50 L 100 75 Z" fill="#fbcfe8"/>
-                <!-- Top flap (this one will animate) -->
-                <path id="envelope-flap" d="M 0 25 L 50 50 L 100 25 Z" fill="#fbcfe8"/>
+                <rect x="0" y="25" width="100" height="50" fill="#2c2240"/>
+                <rect x="5" y="15" width="90" height="60" fill="#1e1b26" stroke="#4a4458" stroke-width="1"/>
+                <path d="M 0 25 L 50 50 L 0 75 Z" fill="#251e36"/>
+                <path d="M 100 25 L 50 50 L 100 75 Z" fill="#251e36"/>
+                <path d="M 0 75 L 50 50 L 100 75 Z" fill="#4c2c54"/>
+                <path id="envelope-flap" d="M 0 25 L 50 50 L 100 25 Z" fill="#4c2c54"/>
             </svg>
         </div>
     </div>
@@ -144,6 +142,8 @@
         const closeEnvelopeButton = document.getElementById('close-envelope-button');
         const envelopeContainer = document.getElementById('envelope-container');
         
+        const whatsappContainer = document.getElementById('whatsapp-container');
+
         const letterSections = document.querySelectorAll('.letter-section');
         let currentSectionIndex = 0;
 
@@ -154,9 +154,14 @@
                 section.classList.add('reveal-block-animation');
                 currentSectionIndex++;
             } else {
+                // All sections revealed, show footer and WhatsApp button
                 letterFooter.classList.remove('hidden');
                 letterFooter.classList.add('reveal-block-animation');
                 
+                whatsappContainer.classList.remove('hidden');
+                whatsappContainer.classList.add('reveal-block-animation');
+                
+                // Swap the control buttons
                 continueContainer.classList.add('button-fade-out');
                 finalButtonContainer.classList.remove('hidden');
                 finalButtonContainer.classList.add('reveal-block-animation');
