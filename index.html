@@ -54,7 +54,6 @@
 <body class="bg-gradient-to-br from-slate-900 to-gray-800 min-h-screen flex items-center justify-center p-4 overflow-x-hidden">
 
     <audio id="background-music" loop>
-        <!-- ¡Enlace actualizado con tu nuevo link! -->
         <source src="https://ia600905.us.archive.org/6/items/mirame-remix-tiktok/7442489276688354103.mp3" type="audio/mpeg">
         Tu navegador no soporta el elemento de audio.
     </audio>
@@ -71,15 +70,12 @@
     </div>
 
     <div id="letterCard" class="bg-slate-800/80 backdrop-blur-sm shadow-2xl rounded-2xl max-w-2xl w-full p-6 sm:p-8 md:p-10 lg:p-12 mx-auto my-8 border-t-4 border-pink-500 hidden relative">
-        <!-- Botón para controlar la música (Play/Pause) -->
         <button id="music-control-button" class="hidden absolute top-4 right-4 text-pink-400 hover:text-pink-200 transition-colors z-10">
-            <!-- Icono de Play (nota musical) -->
             <div id="play-icon" class="hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3V3z" />
                 </svg>
             </div>
-            <!-- Icono de Pausa (nota musical tachada) -->
             <div id="pause-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5z" clip-rule="evenodd" />
@@ -101,13 +97,16 @@
         
         <div id="interactive-zone" class="text-center mt-4">
             <div id="continue-container" class="hidden"><button id="continue-button" class="transition-transform transform hover:scale-110"><svg class="w-14 h-14 text-pink-400 hover:text-pink-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="text-slate-400 text-sm">Toca para continuar</span></button></div>
-            <div id="final-button-container" class="hidden"><button id="close-envelope-button" class="bg-pink-500 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-pink-600 transition-transform transform hover:scale-105 duration-300 text-lg">Cerrar demo</button></div>
         </div>
 
         <footer id="letterFooter" class="text-right mt-8 hidden">
             <p class="font-dancing-script text-3xl sm:text-4xl text-pink-300">Con todo mi cariño,</p>
             <p class="font-dancing-script text-3xl sm:text-3xl text-slate-300 mt-1">[Tu nombre]</p>
         </footer>
+
+        <div id="final-button-container" class="hidden text-center mt-8">
+            <button id="close-envelope-button" class="bg-pink-500 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-pink-600 transition-transform transform hover:scale-105 duration-300 text-lg">Cerrar demo</button>
+        </div>
 
         <div id="whatsapp-container" class="mt-12 text-center hidden">
             <a href="https://wa.me/51921926732?text=Quiero%20informaci%C3%B3n%20para%20dedicatoria%20Web" target="_blank" class="inline-block bg-green-500 text-white font-bold py-4 px-8 rounded-full shadow-lg hover:bg-green-600 transition-transform transform hover:scale-105 duration-300 text-lg">
@@ -163,6 +162,13 @@
         }
 
         openButton.addEventListener('click', () => {
+            // **CAMBIO**: La música inicia aquí
+            if (!musicStarted) {
+                backgroundMusic.play();
+                musicStarted = true;
+                musicControlButton.classList.remove('hidden');
+            }
+
             introContainer.classList.add('fade-out-exit');
             introContainer.addEventListener('animationend', () => {
                 introContainer.classList.add('hidden');
@@ -190,13 +196,7 @@
         });
 
         continueButton.addEventListener('click', () => {
-            // Play music on the first click of the heart button
-            if (!musicStarted) {
-                backgroundMusic.play();
-                musicStarted = true;
-                // Show the music control button now that music is playing
-                musicControlButton.classList.remove('hidden');
-            }
+            // **CAMBIO**: La lógica para iniciar la música se movió al botón "openButton"
             revealNextPart();
         });
 
