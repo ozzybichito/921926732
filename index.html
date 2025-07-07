@@ -1,37 +1,50 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>404 - Página no encontrada</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <style>
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
-      padding: 0;
       background-color: #121212;
       color: white;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
       text-align: center;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      overflow-x: hidden;
     }
 
     .not-found-img {
       width: 150px;
       height: auto;
+      animation: float 3s ease-in-out infinite;
       margin-bottom: 20px;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
 
     h1 {
       font-size: 2rem;
       margin-bottom: 10px;
+      animation: popIn 0.6s ease-out;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.7); }
+      to { opacity: 1; transform: scale(1); }
     }
 
     p {
@@ -40,9 +53,11 @@
       margin: 0 auto 30px auto;
       line-height: 1.4;
       color: #ccc;
+      animation: popIn 0.8s ease-out;
     }
 
     .btn {
+      position: relative;
       display: inline-block;
       padding: 10px 20px;
       background-color: #ff4d4d;
@@ -51,7 +66,23 @@
       border-radius: 5px;
       font-weight: bold;
       transition: background-color 0.3s ease;
-      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: rgba(255,255,255,0.2);
+      transform: rotate(25deg);
+      transition: left 0.5s ease;
+    }
+
+    .btn:hover::before {
+      left: 150%;
     }
 
     .btn:hover {
@@ -66,17 +97,28 @@
       border-top: 1px solid #333;
       width: 100%;
       text-align: center;
+      animation: popIn 1s ease-out;
     }
 
     .footer-brand {
       color: #00ffe7;
       font-weight: bold;
     }
+
+    .heartbeat {
+      animation: heartbeat 1.5s infinite;
+    }
+
+    @keyframes heartbeat {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
   </style>
 </head>
 <body>
 
-  <!-- Aquí puedes usar tu imagen personalizada -->
+  <!-- Imagen animada -->
   <img src="https://cdn-icons-png.flaticon.com/512/1163/1163661.png " alt="404 Not Found" class="not-found-img">
 
   <h1>¡Oops! Esta página no existe.</h1>
@@ -87,6 +129,7 @@
   <footer>
     Hecho con 💖 por <span class="footer-brand">@ozzy.bichito</span><br>
     &copy; 2025 Todos los derechos quizás.
+    <span class="heartbeat">😍</span>
   </footer>
 
 </body>
