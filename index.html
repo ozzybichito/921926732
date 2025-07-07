@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Netflix del Amor 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Netflix+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="  https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css  ">
+    <style>
+        /* Variables CSS para colores y espaciado */
+        :root {
+            --netflix-red: #e50914;
+            --netflix-dark: #141414;
+            --text-white: #ffffff;
+            --text-light-grey: #a0a0a0;
+            --card-bg: #222;
+            --spacing-md: 20px;
+            --spacing-lg: 40px;
+            --header-height-desktop: 80px; /* Altura del header principal en desktop */
+            --header-height-mobile: 100px; /* Altura del header principal en mobile (altura adaptable, este es un valor base) */
+            --title-content-spacing: 20px; /* Espacio entre el título de la sección y su contenido */
+            /* Ajuste de offsets para títulos sticky: ahora se calcularán dinámicamente en JS */
+            --sticky-header-offset-fallback-desktop: 90px;
+            --sticky-header-offset-fallback-mobile: 110px;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Netflix Sans', 'Segoe UI', sans-serif;
+        }
+        body, html {
+            height: 100%;
+            background-color: var(--netflix-dark);
+            color: var(--text-white);
+            scroll-behavior: smooth;
+        }
+        /* --- Splash Screen --- */
+        #splash {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeOut 2s ease forwards;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+        .logo {
+            width: 250px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        /* --- Perfiles --- */
+        #profiles {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: var(--netflix-dark);
+            padding: var(--spacing-md);
+            text-align: center;
+        }
+        #profiles h2 {
+            font-size: 3em;
+            margin-bottom: var(--spacing-lg);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .profile-grid {
+            display: flex;
+            gap: var(--spacing-lg);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .profile-card {
+            background: var(--card-bg);
+            border: 2px solid var(--netflix-red);
+            padding: var(--spacing-md);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            width: 180px;
+            flex-shrink: 0;
+        }
+        .profile-card:hover {
+            transform: scale(1.05);
+            border-color: var(--text-white);
+        }
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 3px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+        .profile-card:hover .profile-img {
+            border-color: var(--netflix-red);
+        }
+        .profile-card p {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--text-white);
+        }
+        /* --- Header --- */
+        header {
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px var(--spacing-md);
+            background: var(--netflix-dark);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            flex-wrap: wrap; /* Permite que el contenido del header se ajuste */
+            transition: height 0.3s ease, padding 0.3s ease; /* Transición suave para la altura */
+        }
+        header .logo {
+            width: 120px;
+            animation: none;
+            flex-shrink: 0;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: var(--spacing-md);
+            flex-wrap: nowrap; /* Por defecto, no envolver en desktop */
+            justify-content: center;
+            margin-top: 0;
+        }
+        nav li {
+            font-size: 1em;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.3s ease;
+            font-weight: 500;
+            color: var(--text-light-grey);
+            padding: 5px 0; /* Padding para el área de clic */
+        }
+        nav li:hover,
+        nav li.active {
+            color: var(--text-white);
+        }
+        nav li::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0%;
+            height: 3px;
+            background: var(--netflix-red);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+        nav li.active::after {
+            width: 100%;
+        }
+        /* --- Mensaje de carga de pestaña --- */
+        #tabMessage {
+            position: fixed;
+            /* top: ajustado dinámicamente en JS */
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease, top 0.4s ease;
+            z-index: 1001;
+            color: var(--text-white);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        #tabMessage.show {
+            opacity: 1;
+            /* top: ajustado dinámicamente en JS */
+        }
+        /* --- Contenido de Secciones --- */
+        section {
+            /* padding-top ajustado dinámicamente en JS */
+            padding-left: var(--spacing-md);
+            padding-right: var(--spacing-md);
+            padding-bottom: var(--spacing-lg);
+            display: none;
+            min-height: calc(100vh - var(--header-height-desktop)); /* Se ajustará con JS */
+            position: relative; /* Para el contexto del sticky header */
+        }
+        section.active {
+            display: block;
+        }
+        /* Contenedor para el título de la sección que será sticky */
+        .row-header {
+            position: sticky;
+            /* top: ajustado dinámicamente en JS */
+            background: var(--netflix-dark); /* Fondo para que no se vea el contenido al hacer scroll */
+            z-index: 99; /* Para que esté por encima del contenido del carrusel */
+            padding-top: 20px; /* Espacio superior dentro del sticky header */
+            padding-bottom: 20px; /* Espacio inferior dentro del sticky header */
+            margin-bottom: var(--title-content-spacing); /* Espacio entre el título y el carrusel */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Línea sutil debajo del título */
+        }
+        /* Títulos de las secciones */
+        .row h2 {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--text-white);
+            margin: 0; /* Eliminar márgenes por defecto para controlar con padding del .row-header */
+        }
+        /* Para Carruseles en PC (horizontal scroll) */
+        .carousel {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding-bottom: 25px;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 20px;
+        }
+        .carousel::-webkit-scrollbar {
+            height: 8px;
+        }
+        .carousel::-webkit-scrollbar-track {
+            background: #333;
+            border-radius: 10px;
+        }
+        .carousel::-webkit-scrollbar-thumb {
+            background: var(--netflix-red);
+            border-radius: 10px;
+        }
+        /* Estilo general para las tarjetas */
+        .card {
+            min-width: 200px;
+            height: 130px;
+            background-size: cover;
+            background-position: center;
+            margin-right: 15px;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card:last-child {
+            margin-right: 0;
+        }
+        .card:hover {
+            transform: scale(1.08);
+            z-index: 10;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+        .card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .card:hover::after {
+            opacity: 1;
+        }
+        .video-thumb {
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9em;
+            text-align: center;
+            color: var(--text-white);
+            padding: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .card:hover .video-thumb {
+            opacity: 1;
+        }
+        .video-thumb i {
+            font-size: 3em;
+            color: var(--netflix-red);
+            margin-bottom: 5px;
+        }
+        /* --- Sección de Inicio (Home) --- */
+        #home {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center; /* Asegura el centrado del texto */
+            /* padding-top ajustado dinámicamente en JS */
+            padding-left: var(--spacing-md);
+            padding-right: var(--spacing-md);
+            padding-bottom: var(--spacing-lg);
+            min-height: calc(100vh - var(--header-height-desktop)); /* Se ajustará con JS */
+        }
+        #home h2 { /* Título principal, aumentado de tamaño */
+            font-size: 3.5em; /* Tamaño más grande */
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+            color: var(--netflix-red); /* Para que resalte más */
+            text-shadow: 0 0 10px rgba(229, 9, 20, 0.7); /* Efecto de brillo */
+            letter-spacing: 2px;
+        }
+        #home p {
+            font-size: 1.3em;
+            line-height: 1.6;
+            max-width: 800px;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-white);
+            text-align: center; /* **Aquí se centra el párrafo** */
+            margin-left: auto; /* Para centrar el bloque en sí */
+            margin-right: auto; /* Para centrar el bloque en sí */
+        }
+        .cta-button {
+            display: inline-block;
+            margin-top: var(--spacing-md);
+            background: var(--netflix-red);
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: background 0.3s ease, transform 0.2s ease;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .cta-button:hover {
+            background: #ff1c2d;
+            transform: translateY(-2px);
+        }
+        /* Estilo para los reproductores de audio y video */
+        #audioPlayer {
+            margin-top: 25px;
+            width: 80%;
+            max-width: 800px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 10px;
+            background-color: black;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            margin-bottom: 40px;
+        }
+        /* Estilo general para el video player (ahora dentro de las secciones) */
+        .video-container {
+            margin-top: 25px; /* Espacio después de las miniaturas o párrafo */
+            width: 80%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 10px;
+            background-color: black;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            overflow: hidden; /* Para que el border-radius se aplique al video */
+            position: relative; /* Para el padding-bottom truco de responsividad */
+            padding-bottom: 56.25%; /* Ratio 16:9 (altura/ancho * 100%) para video responsivo */
+            height: 0; /* Se ajusta con padding-bottom */
+            display: none; /* Por defecto oculto */
+        }
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        /* Estilo para el párrafo de instrucciones debajo del carrusel */
+        .carousel + p {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            font-size: 0.9em;
+            color: var(--text-light-grey);
+        }
+        /* Media Queries para responsividad */
+        @media (max-width: 768px) {
+            header {
+                height: auto; /* Altura adaptable */
+                flex-direction: column; /* Apila logo y nav */
+                align-items: center;
+                padding: 15px var(--spacing-md); /* Ajusta el padding */
+            }
+            header .logo {
+                margin-bottom: 10px; /* Espacio entre logo y nav */
+            }
+            nav {
+                width: 100%; /* Ocupa todo el ancho */
+                margin-top: 10px;
+            }
+            nav ul {
+                gap: 15px; /* Espacio entre los elementos de la lista */
+                flex-wrap: wrap; /* ¡Esto es clave! Permite que los elementos se envuelvan en varias líneas */
+                justify-content: center; /* Centra las pestañas si hay espacio */
+            }
+            nav li {
+                font-size: 0.9em; /* Ajuste el tamaño de la fuente para que quepan mejor */
+                padding: 5px 8px; /* Pequeño padding para un mejor toque */
+                white-space: nowrap; /* Evita que el texto de la pestaña se rompa */
+            }
+            section, #home {
+                /* padding-top ajustado dinámicamente en JS */
+                min-height: calc(100vh - var(--header-height-mobile));
+            }
+            #tabMessage {
+                /* top ajustado dinámicamente en JS */
+            }
+            #tabMessage.show {
+                /* top ajustado dinámicamente en JS */
+            }
+            #profiles h2 {
+                font-size: 2.5em;
+            }
+            .profile-grid {
+                gap: var(--spacing-md);
+            }
+            .profile-card {
+                width: 150px;
+                padding: 15px;
+            }
+            .profile-img {
+                width: 100px;
+                height: 100px;
+            }
+            #home h2 { /* Título principal en mobile */
+                font-size: 2.5em;
+            }
+            .row-header { /* Títulos sticky en mobile */
+                /* top ajustado dinámicamente en JS */
+            }
+            .row h2 {
+                font-size: 1.5em;
+            }
+            #home p {
+                font-size: 1em;
+            }
+            /* --- Adaptación para móvil: Cuadrícula en lugar de Carrusel --- */
+            #music .carousel,
+            #photos .carousel,
+            #videos .carousel,
+            #favorites .carousel {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 15px;
+                overflow-x: hidden;
+                padding-bottom: 0;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+            /* Tamaño de tarjetas más compacto para móviles */
+            #music .card,
+            #videos .card,
+            #favorites .card {
+                min-width: unset;
+                width: 100%;
+                margin-right: 0;
+                height: 100px;
+            }
+            #photos .card {
+                min-width: unset;
+                width: 100%;
+                margin-right: 0;
+                height: 100px;
+            }
+            .cta-button {
+                padding: 15px 30px;
+                font-size: 1em;
+            }
+            #audioPlayer {
+                margin-top: 20px;
+                width: 95%;
+                margin-bottom: 30px;
+            }
+            .video-container {
+                width: 95%; /* Ajuste para móviles */
+            }
+            .carousel + p {
+                margin-top: 15px;
+                margin-bottom: 20px;
+            }
+        }
+        @media (max-width: 480px) {
+            header {
+                height: auto; /* Asegura que siga siendo adaptable */
+                padding: 10px 15px;
+            }
+            header .logo {
+                width: 100px; /* Logo un poco más pequeño */
+                margin-bottom: 8px;
+            }
+            nav {
+                margin-top: 8px;
+            }
+            nav ul {
+                gap: 8px;
+            }
+            nav li {
+                font-size: 0.85em;
+                padding: 4px 6px;
+            }
+            section, #home {
+                /* padding-top ajustado dinámicamente en JS */
+                min-height: calc(100vh - var(--header-height-mobile));
+            }
+            #profiles h2 {
+                font-size: 2em;
+                margin-bottom: var(--spacing-md);
+            }
+            .profile-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+            .profile-card {
+                width: 80%;
+                max-width: 200px;
+            }
+            #home h2 { /* Título principal en pantallas muy pequeñas */
+                font-size: 2em;
+            }
+            .row-header { /* Títulos sticky en pantallas muy pequeñas */
+                /* top ajustado dinámicamente en JS */
+            }
+            .row h2 {
+                font-size: 1.3em;
+            }
+            #home p {
+                font-size: 0.9em;
+            }
+            /* Ajuste final de tamaño para pantallas superpequeñas */
+            #music .card,
+            #photos .card,
+            #videos .card,
+            #favorites .card {
+                height: 90px;
+            }
+            .cta-button {
+                padding: 12px 25px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="splash">
+        <img src="https://ia802901.us.archive.org/19/items/netflix-logo-icon-170919-1/netflix_logo_icon_170919%20%281%29.png  " class="logo" alt="Netflix Logo">
+    </div>
+    <div id="profiles">
+        <h2>¿Quién está viendo?</h2>
+        <div class="profile-grid">
+            <div class="profile-card" onclick="startExperience('Él')">
+                <img src="https://ia800906.us.archive.org/21/items/hombre-1/hombre%20%281%29.png  " class="profile-img" alt="Él">
+                <p>Él</p>
+            </div>
+            <div class="profile-card" onclick="startExperience('Ella')">
+                <img src="https://ia600906.us.archive.org/21/items/hombre-1/mujer.png  " class="profile-img" alt="Ella">
+                <p>Ella</p>
+            </div>
+        </div>
+    </div>
+    <header id="main-header">
+        <img src="https://ia802901.us.archive.org/19/items/netflix-logo-icon-170919-1/netflix_logo_icon_170919%20%281%29.png  " class="logo" alt="Logo Netflix del Amor">
+        <nav>
+            <ul>
+                <li class="active" onclick="switchTab('home', event)">Inicio</li>
+                <li onclick="switchTab('music', event)">Canciones</li>
+                <li onclick="switchTab('photos', event)">Fotos</li>
+                <li onclick="switchTab('videos', event)">Videos</li>
+                <li onclick="switchTab('favorites', event)">Favoritas</li>
+            </ul>
+        </nav>
+    </header>
+    <div id="tabMessage"></div>
+    <main id="mainContent">
+        <section id="home" class="active">
+            <h2>Bienvenid@ al Netflix del Amor 💖</h2>
+            <p>Sumérgete en un espacio diseñado exclusivamente para revivir y celebrar vuestros momentos más especiales. Aquí, cada canción, foto y video cuenta vuestra historia de amor.</p>
+            <a href="https://wa.me/51921926732?text=Hola%2C%20me%20gustaría%20personalizar%20mi%20Netflix%20del%20Amor%20con%20mis%20propios%20recuerdos." class="cta-button" target="_blank" rel="noopener noreferrer">
+                Personaliza Tu Netflix del Amor ✨
+            </a>
+        </section>
+        <section id="music">
+            <div class="row-header"> <h2>Nuestras Canciones Favoritas</h2>
+            </div>
+            <div class="carousel">
+                <div class="card" style="background-image: url('  https://archive.org/download/1751834540/1751834540.png  ');" onclick="playMedia('https://dn721205.ca.archive.org/0/items/mirame-remix-tiktok/7442489276688354103.mp3  ', 'music')"></div>
+                <div class="card" style="background-image: url('https://dn721808.ca.archive.org/0/items/1751834540/1751834757.png  ');" onclick="playMedia('https://ia600502.us.archive.org/16/items/tony-dize-ft.-plan-b-solos-oficial-remix-ozzy/Tony%20Dize%20Ft.%20Ken-Y%20y%20Arcangel%20-%20Mi%20Amor%20Es%20Pobre%20%20%28OZzy%29.mp3  ', 'music')"></div>
+                <div class="card" style="background-image: url('https://dn721808.ca.archive.org/0/items/1751834540/1751834833.png  ');" onclick="playMedia('https://ia600502.us.archive.org/16/items/tony-dize-ft.-plan-b-solos-oficial-remix-ozzy/Tony%20Dize%20Ft.%20Plan%20B%20%20-%20Solos%20%28Oficial%20Remix%29%28OZzy%29.mp3  ', 'music')"></div>
+            </div>
+            <p>Haz clic en la portada para escuchar tu canción favorita.</p>
+            <audio id="audioPlayer" controls style="display: none;"></audio>
+        </section>
+        <section id="photos">
+            <div class="row-header"> <h2>Momentos Capturados de Nuestro Amor</h2>
+            </div>
+            <div class="carousel">
+                <div class="card" style="background-image: url('https://ia601504.us.archive.org/32/items/1751832179-1/1751832179%20%281%29.png  ');"></div>
+                <div class="card" style="background-image: url('https://ia601504.us.archive.org/32/items/1751832179-1/1751832426.png  ');"></div>
+                <div class="card" style="background-image: url('https://ia601504.us.archive.org/32/items/1751832179-1/1751832179%20%281%29.png  ');"></div>
+                <div class="card" style="background-image: url('https://ia601504.us.archive.org/32/items/1751832179-1/1751832426.png  ');"></div>
+                <div class="card" style="background-image: url('https://ia601504.us.archive.org/32/items/1751832179-1/1751832179%20%281%29.png  ');"></div>
+                <div class="card" style="background-image: url('https://ia601504.us.archive.org/32/items/1751832179-1/1751832426.png  ');"></div>
+                <div class="card" style="background-image: url('https://ia601504.us.archive.org/32/items/1751832179-1/1751832179%20%281%29.png  ');"></div>
+                <div class="card" style="background-image: url('https://ia601504.us.archive.org/32/items/1751832179-1/1751832426.png  ');"></div>
+            </div>
+            <p>Desliza para ver más fotos de nuestra historia.</p>
+        </section>
+        <section id="videos">
+            <div class="row-header"> <h2>Nuestros Videos Más Especiales</h2>
+            </div>
+            <div class="carousel">
+                <div class="card" style="background-image: url('https://dn721209.ca.archive.org/0/items/7-122644-2/7_122644%20%282%29.png  ');" onclick="playMedia('https://dn721903.ca.archive.org/0/items/el-juego-del-calamar-trailer-espanol/El-Juego-del-Calamar-_Trailer-espa%C3%B1ol_.webm  ', 'video', 'videos')">
+                    <div class="video-thumb">
+                        <i class="fas fa-play-circle"></i>
+                        <span>Trailer: El Juego del Calamar</span>
+                    </div>
+                </div>
+                <div class="card" style="background-image: url('https://dn721209.ca.archive.org/0/items/7-122644-2/7_122644%20%282%29.png  ');" onclick="playMedia('https://ia803101.us.archive.org/19/items/3403529-uhd-2160-4096-25fps/3188991-hd_1920_1080_25fps.mp4   ', 'video', 'videos')">
+                    <div class="video-thumb">
+                        <i class="fas fa-play-circle"></i>
+                        <span>Vista aérea de la ciudad</span>
+                    </div>
+                </div>
+            </div>
+            <p>Haz clic en la miniatura para reproducir el video.</p>
+            <div id="videoContainerVideos" class="video-container">
+                <video id="videoPlayerVideos" controls playsinline></video>
+            </div>
+        </section>
+        <section id="favorites">
+            <div class="row-header"> <h2>Nuestros Trailers Favoritos</h2>
+            </div>
+            <div class="carousel">
+                <div class="card" style="background-image: url('https://dn721209.ca.archive.org/0/items/7-122644-2/7_122644%20%282%29.png  ');" onclick="playMedia('https://dn721903.ca.archive.org/0/items/el-juego-del-calamar-trailer-espanol/El-Juego-del-Calamar-_Trailer-espa%C3%B1ol_.webm  ', 'video', 'favorites')">
+                    <div class="video-thumb">
+                        <i class="fas fa-play-circle"></i>
+                        <span>Trailer: El Juego del Calamar</span>
+                    </div>
+                </div>
+            </div>
+            <p>Descubre y revive nuestros trailers de películas favoritos.</p>
+            <div id="videoContainerFavorites" class="video-container">
+                <video id="videoPlayerFavorites" controls playsinline></video>
+            </div>
+        </section>
+    </main>
+    <script>
+        // Elementos DOM
+        const audioPlayer = document.getElementById('audioPlayer');
+        const videoContainerVideos = document.getElementById('videoContainerVideos');
+        const videoPlayerVideos = document.getElementById('videoPlayerVideos');
+        const videoContainerFavorites = document.getElementById('videoContainerFavorites');
+        const videoPlayerFavorites = document.getElementById('videoPlayerFavorites');
+        const sections = document.querySelectorAll('section');
+        const mainHeader = document.getElementById('main-header');
+        const tabMessage = document.getElementById('tabMessage');
+        const root = document.documentElement; // Acceso a las variables CSS
+        // Retraso para la pantalla de bienvenida
+        setTimeout(() => {
+            document.getElementById('splash').style.display = 'none';
+            document.getElementById('profiles').style.display = 'flex';
+        }, 2000);
+        let currentProfileName = ''; // Almacena el nombre del perfil seleccionado
+        function getHeaderHeight() {
+            return mainHeader.offsetHeight;
+        }
+        function updateDynamicStyles() {
+            const headerHeight = getHeaderHeight();
+            root.style.setProperty('--current-header-height', `${headerHeight}px`);
+            // Ajustar padding-top de las secciones
+            sections.forEach(sec => {
+                let basePadding = window.innerWidth <= 768 ? 130 : 150; // Base para móviles y desktop
+                sec.style.paddingTop = `${headerHeight + basePadding / 2}px`; // Ajuste el padding para que no se vea el texto inicial metido
+            });
+            // Ajustar top de los títulos sticky
+            document.querySelectorAll('.row-header').forEach(rowHeader => {
+                rowHeader.style.top = `${headerHeight + 10}px`; // 10px de margen extra debajo del header
+            });
+            // Ajustar posición del mensaje de pestaña
+            tabMessage.style.top = `${headerHeight + 10}px`;
+            if (tabMessage.classList.contains('show')) {
+                tabMessage.style.top = `${headerHeight + 25}px`;
+            }
+        }
+        function startExperience(name) {
+            currentProfileName = name;
+            document.getElementById('profiles').style.display = 'none';
+            mainHeader.style.display = 'flex';
+            updateDynamicStyles(); // Asegurar que los estilos dinámicos se apliquen al inicio
+            switchTab('home', null); // Iniciar en la pestaña de inicio
+        }
+        // Función para pausar y ocultar todos los reproductores de video
+        function resetVideoPlayers() {
+            [videoPlayerVideos, videoPlayerFavorites].forEach(player => {
+                if (!player.paused) player.pause();
+                player.removeAttribute('src');
+                player.parentElement.style.display = 'none'; // Ocultar el contenedor
+            });
+        }
+        function switchTab(tabId, event) {
+            // Pausar y ocultar el audio player
+            if (!audioPlayer.paused) audioPlayer.pause();
+            audioPlayer.style.display = 'none';
+            audioPlayer.removeAttribute('src');
+            // Resetear todos los reproductores de video al cambiar de pestaña
+            resetVideoPlayers();
+            // Ocultar todas las secciones
+            sections.forEach(sec => {
+                sec.style.display = 'none';
+                sec.classList.remove('active');
+            });
+            // Mostrar la sección activa
+            const activeSection = document.getElementById(tabId);
+            activeSection.style.display = 'block';
+            activeSection.classList.add('active');
+            // Mostrar mensaje de carga
+            let tabName = '';
+            switch(tabId) {
+                case 'home': tabName = 'Inicio'; break;
+                case 'music': tabName = 'Canciones'; break;
+                case 'photos': tabName = 'Fotos'; break;
+                case 'videos': tabName = 'Videos'; break;
+                case 'favorites': tabName = 'Favoritas'; break;
+                default: tabName = tabId.charAt(0).toUpperCase() + tabId.slice(1);
+            }
+            tabMessage.textContent = `Cargando ${tabName}...`;
+            tabMessage.classList.add('show');
+            updateDynamicStyles(); // Asegurar que el mensaje se posicione correctamente
+            // Actualizar clase activa en la navegación
+            document.querySelectorAll('nav li').forEach(li => li.classList.remove('active'));
+            if (event && event.target) {
+                event.target.classList.add('active');
+            } else {
+                const targetLi = document.querySelector(`nav li[onclick*="switchTab('${tabId}'"]`);
+                if (targetLi) {
+                    targetLi.classList.add('active');
+                }
+            }
+            // Ocultar mensaje de carga
+            setTimeout(() => {
+                tabMessage.classList.remove('show');
+            }, 1000);
+            // Desplazar a la sección
+            const headerHeight = getHeaderHeight();
+            setTimeout(() => {
+                window.scrollTo({
+                    top: activeSection.offsetTop - headerHeight,
+                    behavior: 'smooth'
+                });
+            }, 100);
+        }
+        function playMedia(url, type, sectionId) {
+            // Pausar y ocultar el audio player
+            audioPlayer.pause();
+            audioPlayer.style.display = 'none';
+            audioPlayer.removeAttribute('src');
+            if (type === 'music') {
+                resetVideoPlayers(); // Asegurarse de que los videos se detengan si se reproduce música
+                audioPlayer.src = url;
+                audioPlayer.style.display = 'block';
+                audioPlayer.play();
+                console.log('Reproduciendo canción:', url);
+                setTimeout(() => {
+                    const headerHeight = getHeaderHeight();
+                    window.scrollTo({ behavior: 'smooth', block: 'start', top: audioPlayer.offsetTop - headerHeight - 20 });
+                }, 100);
+            } else if (type === 'video') {
+                // Seleccionar el reproductor y contenedor correcto según la sección
+                let videoPlayer, videoContainer;
+                if (sectionId === 'videos') {
+                    videoPlayer = videoPlayerVideos;
+                    videoContainer = videoContainerVideos;
+                } else if (sectionId === 'favorites') {
+                    videoPlayer = videoPlayerFavorites;
+                    videoContainer = videoContainerFavorites;
+                } else {
+                    console.error("Sección de video no reconocida:", sectionId);
+                    return;
+                }
+                // Si ya se está reproduciendo este video, no hacer nada o simplemente scrollear
+                if (videoPlayer.src === url && videoContainer.style.display === 'block' && !videoPlayer.paused) {
+                     setTimeout(() => {
+                        const headerHeight = getHeaderHeight();
+                        window.scrollTo({ behavior: 'smooth', block: 'start', top: videoContainer.offsetTop - headerHeight - 15 });
+                    }, 100);
+                    return; // Salir de la función
+                }
+                // Pausar y ocultar todos los reproductores de video antes de reproducir el nuevo
+                resetVideoPlayers();
+                // Establecer nuevo video
+                videoPlayer.src = url;
+                videoContainer.style.display = 'block'; // Mostrar el contenedor del video
+                // Reproducir el video
+                videoPlayer.play().catch(e => {
+                    console.error("Error al reproducir video (posible autoplay bloqueado):", e);
+                    // Opcional: Mostrar un mensaje al usuario si la reproducción es bloqueada
+                    // alert("Por favor, interactúa con el video para reproducirlo.");
+                });
+                console.log(`Reproduciendo video en ${sectionId}:`, url);
+                // Desplazarse al video
+                setTimeout(() => {
+                    const headerHeight = getHeaderHeight();
+                    window.scrollTo({ behavior: 'smooth', block: 'start', top: videoContainer.offsetTop - headerHeight - 15 });
+                }, 100);
+            }
+        }
+        // Event listener para actualizar estilos al cambiar el tamaño de la ventana
+        window.addEventListener('resize', updateDynamicStyles);
+        // Ejecutar al cargar la página para asegurar la posición inicial correcta de todos los elementos
+        window.addEventListener('load', () => {
+            updateDynamicStyles();
+        });
+    </script>
+</body>
+</html>
