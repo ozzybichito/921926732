@@ -4,7 +4,19 @@
   <meta charset="UTF-8" />
   <title>404 - Página no encontrada</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg-color: #1a1a2e;
+      --text-color-primary: #e0e0e0;
+      --text-color-secondary: #a0a0b0;
+      --accent-color-1: #0f3460;
+      --accent-color-2: #e94560;
+      --button-hover-color: #c9354b;
+      --footer-brand-color: #00bcd4;
+      --game-object-color: #ffd700; /* Gold for the jumping object */
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -12,9 +24,9 @@
     }
 
     body {
-      background-color: #121212;
-      color: white;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color-primary);
+      font-family: 'Roboto', sans-serif;
       text-align: center;
       min-height: 100vh;
       display: flex;
@@ -22,115 +34,253 @@
       justify-content: center;
       align-items: center;
       overflow-x: hidden;
+      line-height: 1.6;
     }
 
-    .not-found-img {
-      width: 150px;
+    .container {
+      padding: 20px;
+      max-width: 600px;
+      width: 90%;
+      background-color: var(--accent-color-1);
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 1s ease-out;
+      margin-bottom: 20px; /* Space for the game */
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .not-found-icon {
+      width: 120px;
       height: auto;
-      animation: float 3s ease-in-out infinite;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
+      filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+      animation: bounce 2s infinite ease-in-out;
     }
 
-    @keyframes float {
+    @keyframes bounce {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      50% { transform: translateY(-15px); }
     }
 
     h1 {
-      font-size: 2rem;
-      margin-bottom: 10px;
-      animation: popIn 0.6s ease-out;
+      font-family: 'Poppins', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: var(--accent-color-2);
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      animation: scaleIn 0.8s ease-out;
     }
 
-    @keyframes popIn {
-      from { opacity: 0; transform: scale(0.7); }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.8); }
       to { opacity: 1; transform: scale(1); }
     }
 
     p {
-      font-size: 1rem;
-      max-width: 300px;
+      font-size: 1.1rem;
+      color: var(--text-color-secondary);
       margin: 0 auto 30px auto;
-      line-height: 1.4;
-      color: #ccc;
-      animation: popIn 0.8s ease-out;
+      animation: fadeInText 1s ease-out 0.3s forwards;
+      opacity: 0; /* Start invisible for animation */
+    }
+
+    @keyframes fadeInText {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .btn {
-      position: relative;
       display: inline-block;
-      padding: 10px 20px;
-      background-color: #ff4d4d;
+      padding: 12px 28px;
+      background-color: var(--accent-color-2);
       color: white;
       text-decoration: none;
-      border-radius: 5px;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
-      overflow: hidden;
-    }
-
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: rgba(255,255,255,0.2);
-      transform: rotate(25deg);
-      transition: left 0.5s ease;
-    }
-
-    .btn:hover::before {
-      left: 150%;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      cursor: pointer; /* Indicate it's clickable */
     }
 
     .btn:hover {
-      background-color: #e60000;
+      background-color: var(--button-hover-color);
+      transform: translateY(-3px);
+    }
+
+    .sparkle {
+      animation: sparkle 1.5s infinite ease-in-out;
+      display: inline-block;
+      margin-left: 5px;
+    }
+
+    @keyframes sparkle {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.8; }
+    }
+
+    /* Game Area Styles */
+    .game-area {
+      background-color: var(--accent-color-1);
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow: hidden; /* Hide overflowing jump */
+    }
+
+    .score-display {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--footer-brand-color);
+      margin-bottom: 15px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .jump-object {
+      width: 50px;
+      height: 50px;
+      background-color: var(--game-object-color);
+      border-radius: 50%; /* Make it a circle */
+      position: absolute;
+      bottom: 20px; /* Start from near the bottom */
+      transition: transform 0.3s ease-out; /* Smooth jump animation */
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+
+    .jump-object.jumping {
+      transform: translateY(-80px); /* Adjust jump height */
+    }
+
+    .jump-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: var(--footer-brand-color); /* Use a different accent color */
+      color: var(--accent-color-1); /* Dark text for contrast */
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      z-index: 10; /* Ensure button is above the object if they overlap slightly */
+    }
+
+    .jump-button:hover {
+      background-color: #008c9e; /* Darker cyan on hover */
+      transform: translateY(-2px);
     }
 
     footer {
       margin-top: auto;
       padding: 20px;
       font-size: 0.9rem;
-      color: #888;
-      border-top: 1px solid #333;
+      color: var(--text-color-secondary);
       width: 100%;
       text-align: center;
-      animation: popIn 1s ease-out;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      animation: fadeIn 1s ease-out 0.5s forwards;
+      opacity: 0; /* Start invisible for animation */
     }
 
     .footer-brand {
-      color: #00ffe7;
+      color: var(--footer-brand-color);
       font-weight: bold;
     }
 
-    .heartbeat {
-      animation: heartbeat 1.5s infinite;
-    }
-
-    @keyframes heartbeat {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2rem;
+      }
+      p {
+        font-size: 0.95rem;
+      }
+      .btn {
+        padding: 10px 20px;
+        font-size: 1rem;
+      }
+      .not-found-icon {
+        width: 100px;
+      }
+      .game-area {
+        max-width: 280px;
+        padding: 15px;
+      }
+      .jump-object {
+        width: 40px;
+        height: 40px;
+        bottom: 15px;
+      }
+      .jump-object.jumping {
+        transform: translateY(-60px);
+      }
+      .score-display {
+        font-size: 1.2rem;
+      }
+      .jump-button {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Imagen animada -->
-  <img src="https://cdn-icons-png.flaticon.com/512/1163/1163661.png " alt="404 Not Found" class="not-found-img">
+  <div class="container">
+    <img src="https://cdn-icons-png.flaticon.com/512/7552/7552504.png" alt="Página no encontrada" class="not-found-icon">
 
-  <h1>¡Oops! Esta página no existe.</h1>
-  <p>No encontraste nada... ¿Buscabas algo en especial? Lo sentimos, esa oferta ya expiró. ¡Sigue atento a más novedades!</p>
+    <h1>¡Vaya! Parece que te perdiste en el espacio...</h1>
+    <p>La página que buscas ha despegado sin dejar rastro. Pero no te preocupes, ¡tenemos otros universos de productos esperando ser descubiertos!</p>
 
-  <a href="/" class="btn">Volver al inicio</a>
+    <a href="https://wa.me/51921926732?text=Hola!%20Me%20interesan%20sus%20productos%20y%20servicios.%20Me%20podr%C3%ADan%20dar%20m%C3%A1s%20informaci%C3%B3n%3F" class="btn">
+      ¡Hablemos de productos y servicios! <span class="sparkle">✨</span>
+    </a>
+  </div>
+
+  <div class="game-area">
+    <div class="score-display">Puntos: <span id="score">0</span></div>
+    <div class="jump-object" id="jumpObject"></div>
+    <button class="jump-button" id="jumpButton">¡Salta!</button>
+  </div>
 
   <footer>
-    Hecho con 💖 por <span class="footer-brand">@ozzy.bichito</span><br>
-    &copy; 2025 Todos los derechos quizás.
-    <span class="heartbeat">😍</span>
+    Diseñado con creatividad por <span class="footer-brand">@ozzy.bichito</span><br>
+    &copy; 2025 Todos los derechos reservados.
   </footer>
+
+  <script>
+    const jumpButton = document.getElementById('jumpButton');
+    const jumpObject = document.getElementById('jumpObject');
+    const scoreDisplay = document.getElementById('score');
+    let score = 0;
+    let isJumping = false;
+
+    jumpButton.addEventListener('click', () => {
+      if (!isJumping) {
+        isJumping = true;
+        jumpObject.classList.add('jumping');
+        score++;
+        scoreDisplay.textContent = score;
+
+        setTimeout(() => {
+          jumpObject.classList.remove('jumping');
+          isJumping = false;
+        }, 300); // Duration of the jump animation (matches CSS transition)
+      }
+    });
+  </script>
 
 </body>
 </html>
