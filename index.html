@@ -12,7 +12,6 @@
       color: #fff;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       text-align: center;
-      overflow: hidden;
     }
 
     h1 {
@@ -53,12 +52,19 @@
       width: 20px;
       height: 40px;
       background-color: green;
-      animation: moveCactus 2s linear infinite;
     }
 
-    @keyframes moveCactus {
-      0% { right: -20px; }
-      100% { right: 620px; }
+    #score {
+      font-size: 1rem;
+      color: #ccc;
+      margin-top: 10px;
+    }
+
+    #game-over {
+      display: none;
+      font-size: 1.5rem;
+      color: red;
+      margin-top: 10px;
     }
 
     .btn {
@@ -79,8 +85,15 @@
 
     footer {
       margin-top: 40px;
-      font-size: 0.9rem;
+      font-size: 1rem;
       color: #aaa;
+      padding: 20px;
+      border-top: 1px solid #333;
+    }
+
+    .footer-brand {
+      color: #00ffe7;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -95,25 +108,32 @@
   </div>
 
   <p>Presiona la barra espaciadora para saltar 😄</p>
+  <div id="score">Puntaje: 0</div>
+  <div id="game-over">💥 ¡Chocaste!</div>
   <a href="/" class="btn">Volver al inicio</a>
 
   <footer>
-    &copy; 2025 Tu Empresa. Todos los derechos quizás.
+    Hecho con 💖 por <span class="footer-brand">@ozzy.bichito</span><br>
+    &copy; 2025 Todos los derechos quizás.
   </footer>
 
   <script>
     const trex = document.getElementById('trex');
-    let isJumping = false;
+    const cactus = document.getElementById('cactus');
+    const scoreDisplay = document.getElementById('score');
+    const gameOverText = document.getElementById('game-over');
 
-    document.addEventListener('keydown', function(e) {
-      if (e.code === 'Space' && !isJumping) {
-        jump();
-      }
-    });
+    let isJumping = false;
+    let score = 0;
+    let gameRunning = true;
 
     function jump() {
+      if (!gameRunning) return;
+
+      if (isJumping) return;
       isJumping = true;
       let position = 0;
+
       let upInterval = setInterval(() => {
         if (position >= 100) {
           clearInterval(upInterval);
@@ -133,6 +153,67 @@
         }
       }, 20);
     }
+
+    function moveCactus() {
+      let cactusRight = 600;
+      let speed = 5;
+      let interval = setInterval(() => {
+        if (!gameRunning) return;
+
+        cactusRight -= speed;
+        cactus.style.right = cactusRight + 'px';
+
+        // Colisión
+        const trexBottom = parseInt(window.getComputedStyle(trex).bottom);
+        const isTrexOnGround = trexBottom === 0;
+
+        if (
+          cactusRight > 50 && cactusRight < 94 &&
+          !isTrexOnGround
+        ) {
+          // Golpe
+          gameOver();
+          clearInterval(interval);
+        }
+
+        // Si pasó sin golpear
+        if (cactusRight < -20) {
+          cactusRight = 620;
+          score++;
+          scoreDisplay.textContent = 'Puntaje: ' + score;
+          speed += 0.5; // Aumentar dificultad
+        }
+
+      }, 20);
+    }
+
+    function gameOver() {
+      gameRunning = false;
+      gameOverText.style.display = 'block';
+    }
+
+    function restartGame() {
+      gameRunning = true;
+      gameOverText.style.display = 'none';
+      score = 0;
+      scoreDisplay.textContent = 'Puntaje: 0';
+      cactus.style.right = '-20px';
+      trex.style.bottom = '0px';
+      moveCactus();
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.code === 'Space') {
+        if (!gameRunning) {
+          restartGame();
+        } else {
+          jump();
+        }
+      }
+    });
+
+    // Iniciar juego al cargar
+    moveCactus();
   </script>
 
 </body>
