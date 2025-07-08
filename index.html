@@ -17,6 +17,10 @@
             --text-muted: #C0C0C0; /* Gris claro para detalles */
             --progress-bar-fill: #FF4081; /* Rosa más intenso y energético */
             --favorite-color: #FFD700; /* Dorado para el corazón de favorito */
+
+            /* Variables para alturas en móvil */
+            --player-height-mobile: 130px; 
+            --sidebar-height-mobile: 60px;
         }
 
         * {
@@ -448,7 +452,53 @@
             background: var(--progress-bar-fill);
         }
 
-        /* Responsive Design */
+        .about-section {
+            background-color: rgba(0, 0, 0, 0.15);
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .about-section h2 {
+            color: var(--accent-pink);
+            margin-bottom: 15px;
+        }
+        .about-section p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+            color: var(--text-muted);
+        }
+        .about-section p a {
+            color: var(--accent-gold);
+            text-decoration: none;
+        }
+        .about-section p a:hover {
+            text-decoration: underline;
+        }
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: #25D366; /* Color de WhatsApp */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #1DA851;
+            transform: translateY(-2px);
+        }
+
+        .whatsapp-btn i {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        /* --- Responsive Design --- */
 
         /* Para pantallas medianas (ej. tablets en modo horizontal, laptops pequeñas) */
         @media (max-width: 1024px) {
@@ -549,15 +599,20 @@
 
             .sidebar {
                 width: 100%;
-                height: auto; /* Altura auto para que se ajuste al contenido */
-                padding: 10px 0;
+                height: var(--sidebar-height-mobile); /* Altura fija para la barra inferior */
+                padding: 0; /* Padding ajustado para la barra inferior */
                 border-right: none;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                border-top: 1px solid rgba(255, 255, 255, 0.05); /* Borde superior para la barra inferior */
+                border-bottom: none; /* Eliminar borde inferior si existe */
                 flex-direction: row; /* Horizontal para móviles */
                 justify-content: space-around;
                 align-items: center;
                 gap: 0;
                 order: 2; /* Mueve la sidebar debajo del main-content en móvil */
+                position: sticky; /* Fija la sidebar al fondo */
+                bottom: var(--player-height-mobile); /* Justo encima del reproductor */
+                background-color: var(--primary-bg); /* Asegura el fondo */
+                z-index: 999; /* Asegura que esté por encima del contenido y debajo del player */
             }
             /* Ocultar el logo en pantallas pequeñas */
             .sidebar h2 {
@@ -671,6 +726,7 @@
                 width: 100%;
                 box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3); /* Sombra para destacarlo */
                 z-index: 1000; /* Asegura que esté por encima de otros elementos */
+                height: var(--player-height-mobile); /* Altura fija para el reproductor en móvil */
             }
             .player-info {
                 width: 100%;
@@ -810,36 +866,17 @@
                 font-size: 0.9em;
             }
         }
-        /* Definir alturas variables para cálculo en móvil */
-        @media (max-width: 768px) {
-            :root {
-                --player-height-mobile: 130px; /* Altura estimada del reproductor en móvil */
-                --sidebar-height-mobile: 60px; /* Altura estimada del sidebar en móvil */
-            }
+        
+        .hidden-view {
+            display: none !important;
         }
-
-        .whatsapp-btn {
-            display: inline-flex;
-            align-items: center;
-            background-color: #25D366; /* Color de WhatsApp */
-            color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            margin-top: 20px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        .active-view {
+            display: flex !important; /* Asegura que se muestre como flex si es un contenedor principal */
+            flex-direction: column; /* Y mantiene el flujo de columna */
         }
-
-        .whatsapp-btn:hover {
-            background-color: #1DA851;
-            transform: translateY(-2px);
-        }
-
-        .whatsapp-btn i {
-            margin-right: 10px;
-            font-size: 1.2em;
+        .song-list-section.active-view {
+            display: flex !important; /* Las listas de canciones se muestran como flex para el h2 y el div de playlist */
+            flex-direction: column;
         }
     </style>
 </head>
@@ -1372,45 +1409,6 @@
                 }
             });
         });
-
-        // CSS para ocultar/mostrar secciones (añadido al final para asegurar override)
-        document.head.insertAdjacentHTML('beforeend', `
-            <style>
-                .hidden-view {
-                    display: none !important;
-                }
-                .active-view {
-                    display: flex !important; /* Asegura que se muestre como flex si es un contenedor principal */
-                    flex-direction: column; /* Y mantiene el flujo de columna */
-                }
-                .song-list-section.active-view {
-                    display: flex !important; /* Las listas de canciones se muestran como flex para el h2 y el div de playlist */
-                    flex-direction: column;
-                }
-                .about-section {
-                    background-color: rgba(0, 0, 0, 0.15);
-                    padding: 25px;
-                    border-radius: 10px;
-                    margin-top: 20px;
-                }
-                .about-section h2 {
-                    color: var(--accent-pink);
-                    margin-bottom: 15px;
-                }
-                .about-section p {
-                    line-height: 1.6;
-                    margin-bottom: 10px;
-                    color: var(--text-muted);
-                }
-                .about-section p a {
-                    color: var(--accent-gold);
-                    text-decoration: none;
-                }
-                .about-section p a:hover {
-                    text-decoration: underline;
-                }
-            </style>
-        `);
     </script>
 </body>
 </html>
